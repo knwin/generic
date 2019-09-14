@@ -1,0 +1,1578 @@
+' Excel functions written for particular needs
+Function CountUnique(nCells As Range) As Integer
+
+'To count as if counting rows on DISTINCT query in SQL
+'Any duplicate value will be counted as one
+'Date 21 Apr 2010
+'Written by Kyaw Naing Win, GIS Analyst, MIMU.
+'modfication: use of trim to clear the unnecessary spaces
+'modification: use of lcase to avoid case sensitivity
+
+Dim idcounter As Integer
+Dim idcounter2 As Integer
+Dim counter As Integer
+counter = 0
+idcounter = 0
+For Each xCell In nCells
+   
+    idcounter2 = 0
+    For Each xCell2 In nCells
+        'skip blank cells
+        If (xCell = "") Then
+            Exit For
+        ElseIf (LCase(Trim(xCell2)) = LCase(Trim(xCell))) Then
+            If (idcounter = idcounter2) Then
+                'found same value first time so count and quit
+                counter = counter + 1
+                Exit For
+            Else
+                'there is duplicate already count and so quit
+                Exit For
+            End If
+        End If
+        
+        idcounter2 = idcounter2 + 1
+        
+    Next xCell2
+    
+    idcounter = idcounter + 1
+Next xCell
+
+CountUnique = counter
+   
+End Function
+Function MergeUnique(nCells As Range) As String
+'Merge text from colum by taking out unique ones
+'Modify from CountUnique
+'Lacase is used to avoid case sensitivity
+'22 March 2011
+'Kyaw Naing Win
+
+Dim idcounter As Integer
+Dim idcounter2 As Integer
+Dim counter As Integer
+counter = 0
+idcounter = 0
+tmpstr = ""
+Tag = 0
+For Each xCell In nCells
+   
+    idcounter2 = 0
+    For Each xCell2 In nCells
+        'skip blank cells
+        If (xCell = "") Then
+            Exit For
+            'lcase and trim functions are used to get rid of case and white spaces
+        ElseIf (LCase(Trim(xCell2)) = LCase(Trim(xCell))) Then
+            If (idcounter = idcounter2) Then
+            'found same value first time add and quit
+                If (Tag = 0) Then
+                ' first entry and thus comma is not required
+                    tmpstr = Trim(xCell)
+                    Tag = 1
+                Else
+                    tmpstr = tmpstr & "," & (Trim(xCell))
+                End If
+                
+                Exit For
+            Else
+                'there is duplicate already count and so quit
+                Exit For
+            End If
+        End If
+        
+        idcounter2 = idcounter2 + 1
+        
+    Next xCell2
+    
+    idcounter = idcounter + 1
+Next xCell
+
+MergeUnique = tmpstr
+   
+End Function
+'-----------------------------
+'DMS2D Excel Function
+Function DMS2D(dms) As Double
+    
+    Dim deg As Double
+    Dim min As Double
+    Dim sec As Double
+    Dim degPosition As Long
+    Dim minPosition As Long
+    Dim secPosition As Long
+    Dim minLen, secLen As Long
+    
+    degPosition = InStr(1, dms, "°", vbTextCompare)
+    minPosition = InStr(1, dms, "'", vbTextCompare)
+    secPosition = InStr(1, dms, """", vbTextCompare)
+    minLen = minPosition - degPosition - 1
+    secLen = secPosition - minPosition - 1
+    
+    
+    deg = CInt(Left(dms, degPosition - 1))
+    min = CInt(Mid(dms, degPosition + 1, minLen))
+    sec = CInt(Mid(dms, minPosition + 1, secLen))
+    
+    DMS2D = deg + min / 60 + sec / 3600
+   
+End Function
+'-------------------------------------------------------------------------------------
+Function DD2DMS(dd As Double) As String
+'' Written by Kyaw Naing Win
+'' IMO, UNOCHA Paistan
+'' kyawnaingwinknw@gmail.com, wink@un.org
+' Date: 21 Sep 2015
+' this function will convert decimal degree to deg min sec format
+ Dim deg As Integer
+ Dim min As Integer
+ Dim sec As Double
+
+ Dim degChr As String
+ Dim minChr As String
+ Dim secChr As String
+ 
+ degChr = "°"
+ minChr = "'"
+ secChr = """"
+ 
+ deg = Int(dd)
+ min = Int((dd - deg) * 60)
+ sec = (((dd - deg) * 60) - min) * 60
+ 
+ DD2DMS = CStr(deg) & degChr & CStr(min) & minChr & CStr(Round(sec, 3)) & secChr
+
+ 
+End Function
+Function DD2DMM(dd As Double) As String
+'' Written by Kyaw Naing Win
+'' IMO, UNOCHA Paistan
+'' kyawnaingwinknw@gmail.com, wink@un.org
+' Date: 21 Sep 2015
+' this function will convert decimal degree to deg min sec format
+ Dim deg As Integer
+ Dim min As Double
+ 'Dim sec As Double
+
+ Dim degChr As String
+ Dim minChr As String
+ 'Dim secChr As String
+ 
+ degChr = "°"
+ minChr = "'"
+ 'secChr = """"
+ 
+ deg = Int(dd)
+ min = (dd - deg) * 60
+
+ 
+ DD2DMM = CStr(deg) & degChr & CStr(Round(min, 6)) & minChr
+
+ 
+End Function
+Function DMS2DD(dms) As Double
+'' Written by Kyaw Naing Win
+'' GIS Manager
+'' Myanmar Information Management Unit(MIMU)
+'' UNDP, RC/HC, Myanmar
+'' kyawnaingwinknw@gmail.com;
+
+'this functin can replace old functin DMS2D which needs °, ', " character to distinguish each other
+'-and no spaces and no other characters is accepted
+'this function can accept any non-number characters, except "." for decimal mark, to distinguish deg
+'-min and sec values.
+
+'' ERROR Messages
+'it can detect values grater than 60 for min and sec values and prompt with -999999
+'....Eg. 45deg 60m as -999999
+'it can detect unrecognized format and prompt with -888888
+'....Eg. 45deg 35min 15sec 10 as -888888
+'it can detect decimal values in the middle and prompted with -777777
+'....Eg. 45deg 35.5min 15sec as -777777
+
+    Dim deg As Double
+    Dim min As Double
+    Dim sec As Double
+    Dim degPosition As Long
+    Dim minPosition As Long
+    Dim secPosition As Long
+    Dim minLen, secLen As Long
+    Dim inputLen As Long
+    Dim testChar As String
+    Dim dms2 As String
+    Dim numCount As Long
+    
+    numCount = 0
+    'clean white spaces at start and end
+    dms = Trim(dms)
+    inputLen = Len(dms)
+    
+    For I = 1 To inputLen
+        'check number like characters
+        For J = 0 To 9
+            testChar = Mid(dms, I, 1)
+            If InStr(1, testChar, J, vbTextCompare) Then
+                dms2 = dms2 & testChar
+                numCount = numCount + 1
+                GoTo break1:
+            End If
+        Next
+        'check decimal character
+        If InStr(1, testChar, ".", vbTextCompare) Then
+            dms2 = dms2 & testChar
+            numCount = numCount + 1
+        'check (-)ive character
+        ElseIf InStr(1, testChar, "-", vbTextCompare) Then
+            dms2 = dms2 & testChar
+            numCount = numCount + 1
+        Else
+            dms2 = dms2 & " "
+        End If
+break1:
+    
+    Next
+    
+    'clean again white spaces at begining and end if exist
+    dms2 = Trim(dms2)
+        
+    'cleaning double spaces if exist
+    For I = 0 To (Len(dms2) - numCount)
+        dms2 = Replace(dms2, "  ", " ", , , vbTextCompare)
+         
+    Next
+    
+    'Conversions to ddd.ddddd
+    'unknow format
+    If (Len(dms2) - numCount) > 2 Then
+        DMS2DD = -888888
+        Exit Function
+    'Degree Minute Second format input
+    ElseIf (Len(dms2) - numCount) = 2 Then
+        
+        degPosition = InStr(1, dms2, " ", vbTextCompare)
+        minPosition = InStr(degPosition + 1, dms2, " ", vbTextCompare)
+        secPosition = inputLen + 1
+        minLen = minPosition - degPosition - 1
+        secLen = secPosition - minPosition - 1
+        
+        deg = CDbl(Left(dms2, degPosition - 1))
+        min = CDbl(Mid(dms2, degPosition + 1, minLen))
+        sec = CDbl(Mid(dms2, minPosition + 1, secLen))
+        'for negative negative coordinates
+        If min < 0 Or sec < 0 Then
+            DMS2DD = -888888
+            Exit Function
+        End If
+        
+        If deg < 0 Then
+            min = min * -1
+            sec = sec * -1
+        End If
+        
+        
+        'typo checkings
+        If (min >= 60 Or sec >= 60) Then
+           DMS2DD = 0 - 999999
+           Exit Function
+        ElseIf Not (Application.WorksheetFunction.Floor(Abs(deg), 1) = Application.WorksheetFunction.Ceiling(Abs(deg), 1)) Then
+            DMS2DD = -777777
+            Exit Function
+        ElseIf Not (Application.WorksheetFunction.Floor(Abs(min), 1) = Application.WorksheetFunction.Ceiling(Abs(min), 1)) Then
+            DMS2DD = -777777
+            Exit Function
+        End If
+        
+      
+         
+    'Degree and Minute Format input
+    ElseIf (Len(dms2) - numCount) = 1 Then
+        
+        degPosition = InStr(1, dms2, " ", vbTextCompare)
+        minPosition = inputLen + 1
+        
+        minLen = minPosition - degPosition - 1
+        
+        deg = CDbl(Left(dms2, degPosition - 1))
+        min = CDbl(Mid(dms2, degPosition + 1, minLen))
+        sec = 0
+        
+        If min < 0 Then
+            DMS2DD = -888888
+            Exit Function
+        End If
+        
+        'for negative coordinates
+        If deg < 0 Then
+            min = min * -1
+        End If
+        
+        'typo checking
+        If (min >= 60) Then
+           DMS2DD = -999999
+           Exit Function
+        ElseIf Not (Application.WorksheetFunction.Floor(Abs(deg), 1) = Application.WorksheetFunction.Ceiling(Abs(deg), 1)) Then
+            DMS2DD = -777777
+            Exit Function
+        End If
+    
+    'Degree only format input
+    Else
+        deg = CDbl(dms2)
+        min = 0
+        sec = 0
+     
+    End If
+    
+    DMS2DD = deg + min / 60 + sec / 3600
+   
+End Function
+'-------------------------------------------------------------------------------------
+Function CountX(Cell, tSeparator As Characters) As Integer
+'Count number of items in a list inside a cell in which comma is used as spearator
+' general function: LEN(B2)-LEN(SUBSTITUTE(B2,",",""))+1
+
+    Cell = Trim(Cell)
+    If (Cell = "") Then
+        CountX = 0
+    Else
+       CountX = Len(Cell) - Len(Application.WorksheetFunction.Substitute(Cell, tSeparator, "")) + 1
+    End If
+    
+End Function
+
+'-------------------------------------------------------------------------------------
+'Check one cell is subset of other cells
+
+Function IsPartOf(nCells As Range, thisCell) As String
+Dim counter As Integer
+counter = 0
+    For Each xCell In nCells
+        If LCase(Trim(xCell)) = LCase(Trim(thisCell)) Then
+        counter = counter + 1
+          
+        End If
+        
+     Next xCell
+   If counter > 0 Then
+    IsPartOf = "yes"
+   Else
+    IsPartOf = "no"
+   End If
+   
+End Function
+'-------------------------------------------------------------------------------------------
+Private Function CGcs_latlon(lat0, lon0, Tag) As Double
+' GCS coordinate conversioin using three parameter transformation
+' this is main function that will be called from two separate public functions for Latitude and Logitude conversion
+' Written by Kyaw Naming Win (GIS Manager/MIMU)
+' 21 Sep 2010
+' Note: When check against with result from ArcGIS,upto 5 decimal places are identical
+
+' Need a sheet named "Parameteers" and add the parameter values in advance
+'   semimajor axis of input datum   in B3 cell
+'   semimajor axis of ooutput datum in C3 cell
+'   flatenning of input datum       in B4 cell
+'   flatenning of output datum      in C4 cell
+'   dx in B8 cell
+'   dy in B9 cell
+'   dz in B10 cell
+
+Dim a1 As Double 'semimajor axis of input datum in B3 cell of the sheet "Parameters"
+Dim a2 As Double 'semimajor axis of ooutput datum in C3 cell of the sheet "Parameters"
+Dim f1 As Double 'flatenning of input datum in B4 cell of the sheet "Parameters"
+Dim f2 As Double 'flatenning of output datum in C4 cell of the sheet "Parameters"
+
+Dim x, y, z As Double 'transformated cartesian coordinates
+Dim h As Double         'high of the input location above the datum
+Dim dx, dy, dz As Double    'transformation parameters from input to output datum in B8, B9, B10 cell of the sheet "Parameters"
+
+Dim lat1, lon1 As Double    'input coordinates in radians
+Dim lat2, lon2 As Double    'output coordinates in radians
+
+Dim v1, e1 As Double    'intermediate values
+Dim e2 As Double
+Dim p, r, u As Double
+
+h = 0 'default
+
+a1 = Range("Parameters!B3").Value
+a2 = Range("Parameters!C3").Value
+f1 = Range("Parameters!B4").Value
+f2 = Range("Parameters!C4").Value
+
+dx = Range("Parameters!B8").Value
+dy = Range("Parameters!B9").Value
+dz = Range("Parameters!B10").Value
+
+
+lat1 = Excel.WorksheetFunction.Radians(lat0)
+lon1 = Excel.WorksheetFunction.Radians(lon0)
+
+e1 = 2 * f1 - f1 * f1
+e2 = 2 * f2 - f2 * f2
+v1 = a1 / Excel.WorksheetFunction.ImSqrt(1 - e1 * Sin(lat1) * Sin(lat1))
+
+'transformed cartesian coordinates
+x = (v1 + h) * Cos(lat1) * Cos(lon1) + dx
+y = (v1 + h) * Cos(lat1) * Sin(lon1) + dy
+z = (v1 * (1 - e1) + h) * Sin(lat1) + dz
+
+p = Excel.WorksheetFunction.ImSqrt(x * x + y * y)
+r = Excel.WorksheetFunction.ImSqrt(p * p + z * z)
+u = (z / p) * ((1 - f2) + (e2 * a2 / r))        ' u is tan vaue
+u = Excel.WorksheetFunction.Atan2(1, u)
+
+Pi = Excel.WorksheetFunction.Pi()
+'**calculate longitude
+lon2 = y / x                                    'lon2 is tan value
+lon2 = Excel.WorksheetFunction.Atan2(1, lon2)
+lon2 = lon2 * 180 / Pi                          'radian to deg
+If (x < 0) Then                                 ' second and third quadrant
+    lon2 = lon2 + 180
+ElseIf (x > 0) And (y < 0) Then                 'fourth quadrant
+    lon2 = lon2 + 360
+Else
+    lon2 = lon2
+End If
+'**calculate latitude
+lat2 = (z * (1 - f2) + e2 * a2 * Sin(u) * Sin(u) * Sin(u)) / ((1 - f2) * (p - e2 * a2 * Cos(u) * Cos(u) * Cos(u)))
+                                                'lat2 is tan value
+lat2 = Excel.WorksheetFunction.Atan2(1, lat2)
+lat2 = lat2 * 180 / Pi                          'radian to deg
+
+'lat or lon to return
+If (Tag) Then
+ CGcs_latlon = lat2
+Else
+ CGcs_latlon = lon2
+End If
+
+End Function
+
+Public Function CGcs_lat(lat0, lon0) As Double
+
+ CGcs_lat = CGcs_latlon(lat0, lon0, True)
+End Function
+
+Public Function CGcs_lon(lat0, lon0) As Double
+
+ CGcs_lon = CGcs_latlon(lat0, lon0, False)
+
+End Function
+'______________________________________________________________________
+'Date 1 Dec 2010
+'Function for mergeing text in cells into one cell
+
+Function merge(nCells As Range) As String
+'find non blank cell count
+Lastcount = 0
+For Each xCell In nCells
+ If (xCell = "") Then
+    Lastcount = Lastcount
+ ElseIf (xCell = " ") Then
+    tLastcount = Lastcount
+ Else
+ Lastcount = Lastcount + 1
+ End If
+Next
+
+Count = 0
+For Each xCell In nCells
+ 
+ If (xCell = "") Then
+    tmpstr = tmpstr
+ ElseIf (xCell = " ") Then
+    tmpstr = tmpstr
+ Else
+  Count = Count + 1
+  'chcek last non blank cell
+  If (Count = Lastcount) Then
+    tmpstr = tmpstr & xCell
+    Else
+    tmpstr = tmpstr & xCell & ","
+  End If
+    
+ End If
+Next
+merge = tmpstr
+End Function
+'----------------------------------------------------------------------------------------
+Sub fillzero2()
+'
+' Filling zero to table where there is no value
+' modified from sub fillzero
+'
+'Written by Kyaw Naing Win
+' IMO, OCHA Bishkek Kgyrgystan
+' 24 June 2011
+'
+'
+
+'
+' active cell range must be changed acoording to the context
+    NROW = InputBox("Enter Number of Rows to fill from current row")
+    nOffset = InputBox("Enter Number of Column to fill") ' & Chr(13) & " + for right and - for left")
+   
+    myRange = "A1:A" & NROW
+    Set myselection = ActiveCell.Range(myRange)
+    For I = 0 To nOffset - 1
+          
+        Set myselection2 = ActiveCell.Offset(0, I).Range(myRange)
+        'counter = mySelection.Count
+    
+        'ActiveCell.Range("A1:Q538").Select
+        
+        'For Each x In Selection
+        For Each x In myselection2
+         If (Trim(x) = "") Then
+         x.Value = 0
+        Else
+             With x.Interior
+            '   .Pattern = xlSolid
+            '   .PatternColorIndex = xlAutomatic
+            '    .Color = RGB(255, 255, ib)
+            '   .TintAndShade = 0
+            '   .PatternTintAndShade = 0
+            
+            End With
+        End If
+        Next
+    Next
+
+End Sub
+Sub fillx()
+'
+' Filling anything to table where there is no value
+' modified from sub fillzero
+'
+'Written by Kyaw Naing Win
+' IMO, OCHA Bishkek Kgyrgystan
+' 24 June 2011
+'
+'
+
+'
+' active cell range must be changed acoording to the context
+    NROW = InputBox("Enter Number of Rows to fill from current row")
+    nOffset = InputBox("Enter Number of Column to fill") ' & Chr(13) & " + for right and - for left")
+    tWhatToFill = InputBox("Enter any thing for blank cells")
+    myRange = "A1:A" & NROW
+    Set myselection = ActiveCell.Range(myRange)
+    For I = 0 To nOffset - 1
+          
+        Set myselection2 = ActiveCell.Offset(0, I).Range(myRange)
+        'counter = mySelection.Count
+    
+        'ActiveCell.Range("A1:Q538").Select
+        
+        'For Each x In Selection
+        For Each x In myselection2
+         If (Trim(x) = "") Then
+         x.Value = tWhatToFill
+        Else
+             With x.Interior
+            '   .Pattern = xlSolid
+            '   .PatternColorIndex = xlAutomatic
+            '    .Color = RGB(255, 255, ib)
+            '   .TintAndShade = 0
+            '   .PatternTintAndShade = 0
+            
+            End With
+        End If
+        Next
+    Next
+
+End Sub
+
+
+'--------------------
+Sub ccopy()
+
+'cascade copy for filling blank cells with value if exist from cell above
+
+'usually with pivot results for 3W mapping
+
+'Written by Kyaw Naing Win
+
+'IMO, OCHA Bishkek, Kyrgyzstan
+
+'15 march 2011
+
+
+'modified again on 6 May 2013..
+'to add number of column in input msg and to process the whole table in one click
+
+NROW = InputBox("Enter Number of Row to Fill")
+nCol = InputBox("Enter Number of Column to Fill")
+myRange = "A1:A" & NROW
+
+For J = 0 To nCol
+    
+    Set myselection = ActiveCell.Offset(0, J).Range(myRange)
+    'moving to each column
+    
+    counter = myselection.Count
+       
+    For I = 1 To counter
+        If I > 1 Then
+          If myselection(I) = "" Then
+            myselection(I) = myselection(I - 1)
+          End If
+        
+        End If
+    
+    Next
+Next
+MsgBox ("Filling up finished")
+End Sub
+
+Sub ccopy2()
+'modified from ccopy()
+'copy for filling blank cells with value if exist from nerby column
+'usually with pivot results for 3W mapping
+'Written by Kyaw Naing Win
+'IMO, OCHA Biskek
+'23 May 2011
+
+NROW = InputBox("Enter Number of Row to Fill")
+nOffset = InputBox("Enter column offset by number" & Chr(13) & " + for right and - for left")
+myRange = "A1:A" & NROW
+
+Set myselection = ActiveCell.Range(myRange)
+Set myselection2 = ActiveCell.Offset(0, nOffset).Range(myRange)
+counter = myselection.Count
+
+
+For I = 1 To counter
+If I > 1 Then
+  If myselection(I - 1) = "" Then
+    myselection(I - 1) = myselection2(I - 1)
+  End If
+
+End If
+
+Next
+MsgBox ("Filling up finished")
+End Sub
+
+Function xnum(Cell) As String
+'function to extract number part only from a mixed string
+cellLen = Len(Cell)
+
+tmpstr = ""
+For I = 1 To cellLen
+    a = Mid(Cell, I, 1)
+    acode = Asc(a)
+    If (acode < 64) Or (acode > 128) Then
+        tmpstr = tmpstr & a
+    Else
+continue:
+    End If
+    
+
+Next
+xnum = tmpstr
+End Function
+
+Function xtext(Cell) As String
+'function to extract text part only from a mixed string
+cellLen = Len(Cell)
+
+tmpstr = ""
+For I = 1 To cellLen
+    a = Mid(Cell, I, 1)
+    acode = Asc(a)
+    If (acode > 64) And (acode < 128) Then
+        tmpstr = tmpstr & a
+    Else
+continue:
+    End If
+    
+
+Next
+xtext = tmpstr
+End Function
+
+Sub myTrim()
+'removing white space
+'by Kyaw Naing Win
+'IMO OCHA, Bishkek, 29 June 2011
+    nRowCount = InputBox("Enter Number of Rows from current cell")
+    nOffset = InputBox("Enter Number of Column from current cell") ' & Chr(13) & " + for right and - for left")
+    myRange = "A1:A" & nRowCount
+    
+    Set myselection = ActiveCell.Range(myRange)
+    For I = 0 To nOffset - 1
+          
+        Set myselection2 = ActiveCell.Offset(0, I).Range(myRange)
+        'counter = mySelection.Count
+        For Each x In myselection2
+        x.Value = Trim(x)
+        Next
+    Next
+
+End Sub
+
+'----------------------------------------------------------------------------------------
+Sub myProper()
+'
+' Proper case
+'
+'Written by Kyaw Naing Win
+' IMO, OCHA Benghazi Libya 2 Oct 2011
+'
+
+' active cell range must be changed acoording to the context
+    NROW = InputBox("Enter Number of Rows to Proper from current cell")
+ 
+    myRange = "A1:A" & NROW
+    Set myselection = ActiveCell.Range(myRange)
+    For Each x In myselection
+        
+        x.Value = Excel.WorksheetFunction.Proper(Trim(x))
+      
+    Next
+
+End Sub
+
+'----------------------------------------------------------------------------------------
+Sub myLcase()
+'
+' Lower case for eamils
+'
+'Written by Kyaw Naing Win
+' IMO, OCHA Benghazi Libya 2 Oct 2011
+'
+
+' active cell range must be changed acoording to the context
+    NROW = InputBox("Enter Number of Rows to Lowercase from current cell")
+ 
+    myRange = "A1:A" & NROW
+    Set myselection = ActiveCell.Range(myRange)
+    For Each x In myselection
+        
+        x.Value = LCase(Trim(x))
+      
+    Next
+
+End Sub
+Sub myUcase()
+'
+' Lower case for eamils
+'
+'Written by Kyaw Naing Win
+' IMO, OCHA Benghazi Libya 2 Oct 2011
+'
+
+' active cell range must be changed acoording to the context
+    NROW = InputBox("Enter Number of Rows to Uppercase from current cell")
+ 
+    myRange = "A1:A" & NROW
+    Set myselection = ActiveCell.Range(myRange)
+    For Each x In myselection
+        
+        x.Value = UCase(Trim(x))
+      
+    Next
+
+End Sub
+
+Function tel(Cell) As String
+'function to format phone number by adding space at evrey three digit
+cellLen = Len(Cell)
+
+tmpstr = ""
+For I = 1 To cellLen
+    a = Mid(Cell, I, 1)
+    acode = Asc(a)
+    If (acode < 64) Or (acode > 128) Then
+        tmpstr = tmpstr & a
+    Else
+continue:
+    End If
+    
+
+Next
+
+tmpstr2 = ""
+cellLen = Len(tmpstr)
+
+For I = 1 To cellLen
+    a = Mid(Cell, I, 1)
+    acode = Asc(a)
+    If I = 3 Or I = 6 Or I = 9 Or I = 12 Or I = 15 Then
+        tmpstr2 = tmpstr2 & a & " "
+    Else
+        tmpstr2 = tmpstr2 & a
+    End If
+    
+
+Next
+
+tel = tmpstr2
+End Function
+Function mg(nCells As Range) As String
+'modified from merge function with space after comma
+'find non blank cell count
+Lastcount = 0
+For Each xCell In nCells
+ If (xCell = "") Then
+    Lastcount = Lastcount
+ ElseIf (xCell = " ") Then
+    tLastcount = Lastcount
+ Else
+ Lastcount = Lastcount + 1
+ End If
+Next
+
+Count = 0
+For Each xCell In nCells
+ 
+ If (xCell = "") Then
+    tmpstr = tmpstr ' skip blank cell
+ ElseIf (xCell = " ") Then
+    tmpstr = tmpstr ' skip white space cell
+ Else
+  Count = Count + 1
+  'chcek last non blank cell
+  If (Count = Lastcount) Then
+    tmpstr = tmpstr & Trim(xCell)
+    Else
+    tmpstr = tmpstr & Trim(xCell) & ", "
+  End If
+    
+ End If
+Next
+mg = tmpstr
+End Function
+Function mg2(nCells As Range) As String
+'find non blank cell count
+Lastcount = 0
+For Each xCell In nCells
+ If (xCell = "") Then
+    Lastcount = Lastcount
+ ElseIf (xCell = " ") Then
+    tLastcount = Lastcount
+ Else
+ Lastcount = Lastcount + 1
+ End If
+Next
+
+Count = 0
+For Each xCell In nCells
+ 
+ If (xCell = "") Then
+    tmpstr = tmpstr
+ ElseIf (xCell = " ") Then
+    tmpstr = tmpstr
+ Else
+  Count = Count + 1
+  'chcek last non blank cell
+  If (Count = Lastcount) Then
+    tmpstr = tmpstr & Trim(xCell)
+    Else
+    tmpstr = tmpstr & Trim(xCell) & "X "
+  End If
+    
+ End If
+Next
+mg2 = "what "
+End Function
+Function mgu(nCells As Range, Optional sep As String) As String
+'Merge text from colum by taking out unique ones
+'Modify from CountUnique
+'Lacase is used to avoid case sensitivity
+'22 March 2011
+'Kyaw Naing Win
+
+Dim idcounter As Integer
+Dim idcounter2 As Integer
+Dim counter As Integer
+counter = 0
+idcounter = 0
+tmpstr = ""
+Tag = 0
+For Each xCell In nCells
+   
+    idcounter2 = 0
+    For Each xCell2 In nCells
+        'skip blank cells
+        If (xCell = "") Then
+            Exit For
+            'lcase and trim functions are used to get rid of case and white spaces
+        ElseIf (LCase(Trim(xCell2)) = LCase(Trim(xCell))) Then
+            If (idcounter = idcounter2) Then
+            'found same value first time add and quit
+                If (Tag = 0) Then
+                ' first entry and thus comma is not required
+                    tmpstr = Trim(xCell)
+                    Tag = 1
+                Else
+                    tmpstr = tmpstr & sep & (Trim(xCell))
+                End If
+                
+                Exit For
+            Else
+                'there is duplicate already count and so quit
+                Exit For
+            End If
+        End If
+        
+        idcounter2 = idcounter2 + 1
+        
+    Next xCell2
+    
+    idcounter = idcounter + 1
+Next xCell
+
+mgu = tmpstr
+   
+End Function
+
+Sub group123()
+'to group Orgs by Clusters and by Districts into one cells
+'Dist, Cluster, Org columns are required and must be in exact order as here
+'Written by Kyaw Naing Win
+'IMO, OCHA Karachi
+'22 Jan 2012
+
+'Data is prepared with pivotable first and then fill the blank cells with data from above (use ccopy to this)
+'place the cursor on the first cell of district column and run the macro
+
+NROW = InputBox("Enter Number of Rows to search")
+'nOffset = InputBox("Enter column offset to write the output")
+myRange = "A1:A" & NROW
+'data selection
+Set column1 = ActiveCell.Range(myRange) ' District list
+Set column2 = ActiveCell.Offset(0, 1).Range(myRange) ' cluster list
+Set column3 = ActiveCell.Offset(0, 2).Range(myRange) ' org list
+
+'result table
+Set outcolumn1 = ActiveCell.Offset(0, 4).Range(myRange) ' dist out put
+Set outcolumn2 = ActiveCell.Offset(0, 5).Range(myRange) ' cluster out put
+Set outcolumn3 = ActiveCell.Offset(0, 6).Range(myRange) ' org merged output
+
+counter = column1.Count
+
+J = 2
+k = 2
+For I = 2 To counter
+If column1(I) <> column1(I - 1) Then
+
+outcolumn1(J) = column1(I) ' copy the cluster name
+outcolumn2(k) = column2(I) 'copy the dist name
+outcolumn3(k) = column3(I) 'copy orgs
+J = J + 1
+k = k + 1
+Else
+
+If column2(I) <> column2(I - 1) Then
+outcolumn2(k) = column2(I) 'copy the dist name
+outcolumn3(k) = column3(I)
+J = J + 1
+k = k + 1
+Else
+outcolumn3(k - 1) = outcolumn3(k - 1) & ", " & column3(I)
+
+End If
+
+End If
+
+Next
+MsgBox ("finished")
+End Sub
+Function weekdayname(Cell As Double) As String
+'created on 4 June 2012
+'by Kyaw Naing Win, IMO, Karachi OCHA
+
+tmpDayNum = Application.WorksheetFunction.Weekday(Cell)
+Select Case tmpDayNum
+    Case 1
+    weekdayname = "SUN"
+    Case 2
+    weekdayname = "MON"
+    Case 3
+    weekdayname = "TUE"
+    Case 4
+    weekdayname = "WED"
+    Case 5
+    weekdayname = "THU"
+    Case 6
+    weekdayname = "FRI"
+    Case 7
+    weekdayname = "SAT"
+    Case Else
+    weekdayname = ""
+End Select
+
+End Function
+
+Function daytext(Cell As Double) As String
+'created on 4 June 2012
+'by Kyaw Naing Win, IMO, Karachi OCHA
+
+daytext = Application.WorksheetFunction.Text(Cell, "ddd")
+
+End Function
+
+Function daytext2(Cell As Double) As String
+'created on 4 June 2012
+'by Kyaw Naing Win, IMO, Karachi OCHA
+
+daytext = Application.WorksheetFunction.Text(Cell, "dddd")
+
+End Function
+
+Function pop(Cell As Double, g As Double, y As Integer)
+'population projection with a growth rate
+'cell = base population, g = growth rate %, y = years between target year from the base year
+
+
+For I = 1 To y
+
+    Cell = Cell + Cell * g / 100
+
+Next I
+
+pop = Cell
+End Function
+
+Function popy()
+'population projection with a growth rate
+' cell = base population, g = growth rate %, by = base year, ty = target year
+
+
+For I = 1 To (targetYr - baseYr)
+
+    cell2 = cell2 + cell2 * g / 100
+
+Next I
+
+popy = 1
+
+End Function
+
+Sub myTFormat()
+'
+' Foramtting a table
+' modified from sub fillzero
+' Alternative to Format Table tool of excel
+'
+
+'Written by Kyaw Naing Win
+' IMO, OCHA Islamabad
+' 5 May 2013
+'
+'Bug!! If the column number exceeds 26 (26 alphabet), it counted again from "a" and till "z".
+'Resolve this issue with Range(cell1, cell2)property
+'
+
+    NROW = InputBox("Enter Number of Rows to fill from current row")
+    nOffset = InputBox("Enter Number of Column to fill") ' & Chr(13) & " + for right and - for left")
+    nOffset2 = InputBox("Enter Number of Column not fill")
+   
+    'This does not work properly when column number exceed 26 (i.e "Z"). Range (Cell(r,c),Cell(r2,c2)) is used to overcome
+    'this problem
+    'myRange = "A1:" & Chr(nOffset + 65 - 1) & "1"
+    'myRange2 = "A1:" & Chr(nOffset2 + 65 - 1) & "1"
+  
+   
+    For I = 0 To NROW - 1
+         
+        Set myselection23 = ActiveCell.Offset(I, nOffset).Range(Cells(1, 1), Cells(1, nOffset2 * 1))
+        Set myselection1 = ActiveCell.Offset(I, 0).Range(Cells(1, 1), Cells(1, nOffset * 1))     ' * 1 is used to convert number in text formt to number format
+        'Set myselection2 = ActiveCell.Offset(i, nOffset).Range(Cells(1, 1), Cells(1, nOffset2 * 1))
+        Set myselection2 = ActiveCell.Offset(I, nOffset).Range(Cells(1, 1), Cells(1, 1))
+        Set myselection3 = ActiveCell.Offset(I, nOffset + 1).Range(Cells(1, 1), Cells(1, nOffset2 * 1 - 1))
+        
+        'border line for all sub columns
+        For Each x3 In myselection3
+           With x3.Borders
+                .Item(8).Color = RGB(220, 220, 220)
+                .Item(8).LineStyle = 2
+           End With
+        Next
+        
+        For Each x2 In myselection2
+            If (Trim(x2) <> "") Then
+                With x2.Borders
+                    .Item(8).Color = RGB(220, 220, 220)
+                    .Item(8).LineStyle = 2
+                End With
+            End If
+            With x2.Interior
+                .Color = RGB(255, 255, 255)
+            End With
+        Next
+        
+        For Each x1 In myselection1
+            If (Trim(x1) <> "") Then
+                With x1.Borders
+                    'left = 7; right = 10, top = 8, bottom =9
+                        .Item(8).Color = RGB(79, 129, 189)
+                        .Item(8).LineStyle = 1
+                End With
+              
+                For Each x23 In myselection23
+                    With x23.Borders
+                    'left = 7; right = 10, top = 8, bottom =9
+                        .Item(8).Color = RGB(79, 129, 189)
+                        .Item(8).LineStyle = 1
+                    End With
+                Next
+            End If
+            With x1.Interior
+                .Color = RGB(255, 255, 255)
+            End With
+        
+        Next
+    Next
+
+End Sub
+Sub fixDates()
+'fixing problematic date entries in excel
+'by Kyaw Naing Win
+'IMO OCHA, Islamabad, 2 Aug 2012
+
+'*PROBLEM
+'  date was entered improperly and excel cannot understand it as date anymore and then temporal calculation become difficult
+'  People wrongly use dd/mm/yy format whil excele use mm/dd/yy as default
+'  To dd/mm/yy format, excel will treat as if valid format as long as dd is less than or equal to 12
+'  this false date is not possible to detect easily. This macro will not fix this problem
+'  On the other hand people wrongly use dash (-), dot (.) to separate day, month and year in dd/mm/yy format
+'  If the date is entered with these character, it become a text but not a date
+'  Still excel accept as this format "dd mmm yy or dd mmm yyyy" and covert to its native format once press enter
+'
+'  This program will replace "mm" value along with delimination charachter to <space>mmm<space> so that excel can accept as corret date
+
+Dim mm() As Variant
+Dim mmm() As Variant
+mm = Array(" 01 ", " 02 ", " 03 ", " 04 ", " 05 ", " 06 ", " 07 ", " 08 ", " 09 ", " 1 ", " 2 ", " 3 ", " 4 ", " 5 ", " 6 ", " 7 ", " 8 ", " 9 ", " 10 ", " 11 ", " 12 ")
+mmm = Array(" jan ", " feb ", " mar ", " apr ", " may ", " jun ", " jul ", " aug ", " sep ", " jan ", " feb ", " mar ", " apr ", " may ", " jun ", " jul ", " aug ", " sep ", " oct ", " nov ", " dec ")
+
+NROW = InputBox("Enter Number of Rows to process starting from current cell")
+   
+myRange = "A1:A" & NROW
+   
+Set myselection = ActiveCell.Range(myRange)
+    
+For Each x In myselection
+  If VarType(x.Value) = 8 Then
+     'VarType 8 represent Text, and 7 Date
+     'IsDate (VBA), IsText, IsNonText and IsNumber funtions do not work 100% correct
+     ' a text which result in FALSE when test with IsDate is not a date in the cell
+     ' IsText worksheet function retrun TRUE to a date value in VBA but FALSE in Excel worksheet
+        
+     'tmDate = Trim(x.Value)
+      tmpDate = Application.WorksheetFunction.Substitute(x.Value, ".", " ")
+      tmpDate = Application.WorksheetFunction.Substitute(tmpDate, "-", " ")
+      tmpDate = Application.WorksheetFunction.Substitute(tmpDate, "/", " ")
+      tmpDate = Application.WorksheetFunction.Substitute(tmpDate, "  ", " ")
+        
+      For I = 0 To 20
+            
+        tmpDate = Application.WorksheetFunction.Substitute(tmpDate, mm(I), mmm(I))
+            
+      Next
+
+      x.Value = Trim(tmpDate)
+         
+ End If
+ 
+Next
+  
+
+End Sub
+
+Sub fixDates2()
+'modify from fixDates()
+'modify date: 20 May 2015
+'   any non digit character will be treated as date separator
+'----------------------------------------------
+'fixing problematic date entries
+'by Kyaw Naing Win
+'IMO OCHA, Islamabad, 2 Aug 2012
+
+'*PROBLEM
+'  date was entered improperly and excel treates as text and then temporal/date calculation become difficult
+'  People wrongly use dd/mm/yy format whil excele use mm/dd/yy as default
+'  To dd/mm/yy format, excel will treat as if valid format as long as dd is less than or equal to 12
+'  this false date is not possible to detect easily. This macro will not fix this problem
+'  On the other hand people wrongly use dash (-), dot (.) to separate day, month and year in dd/mm/yy format
+'  If the date is entered with these character, it become a text but not a date
+'  Still excel accept as this format "dd mmm yy" or "dd mmm yyyy" and covert to its native format once press enter
+'
+'  This program will replace "mm" value along with delimination charachter to <space>mmm<space> so that excel can accept as corret date
+
+Dim mm() As Variant
+Dim mmm() As Variant
+mm = Array(" 01 ", " 02 ", " 03 ", " 04 ", " 05 ", " 06 ", " 07 ", " 08 ", " 09 ", " 1 ", " 2 ", " 3 ", " 4 ", " 5 ", " 6 ", " 7 ", " 8 ", " 9 ", " 10 ", " 11 ", " 12 ")
+mmm = Array(" jan ", " feb ", " mar ", " apr ", " may ", " jun ", " jul ", " aug ", " sep ", " jan ", " feb ", " mar ", " apr ", " may ", " jun ", " jul ", " aug ", " sep ", " oct ", " nov ", " dec ")
+
+NROW = InputBox("Enter Number of Rows to process starting from current cell")
+   
+myRange = "A1:A" & NROW
+   
+Set myselection = ActiveCell.Range(myRange)
+    
+For Each x In myselection
+    If VarType(x.Value) = 8 Then
+     'VarType 8 represent Text, and 7 Date
+     'IsDate (VBA), IsText, IsNonText and IsNumber funtions do not work 100% correct
+     'IsText worksheet function retrun TRUE to a date value in VBA but FALSE in Excel worksheet
+        
+     
+     ''below sub function will look in to the cell value. If the value is text (though date), then sort out number and any
+     '''all continuous text characters will be replace with a space " ".
+     'number in a string is treated as string but not as nubmer and therefore cannot test with IsNumber()
+     
+      tmpDate = x.Value
+      tmpDate2 = ""
+      charCount = 0
+        For I = 1 To Len(tmpDate)
+        'check number like characters
+            numCount = 0
+            For J = 0 To 9
+                testChar = Mid(tmpDate, I, 1)
+                If InStr(1, testChar, J, vbTextCompare) Then
+                    If charCount Then
+                        tmpDate2 = tmpDate2 & " " & testChar
+                        charCount = 0
+                    Else
+                        tmpDate2 = tmpDate2 & testChar
+                    End If
+                
+                numCount = 1
+                GoTo break1: 'if found no need to continue and restart next i
+                            
+                End If
+    
+            Next 'next j
+            
+break1:
+            If numCount = 0 Then
+                charCount = 1
+            End If
+        Next ' next i
+        
+        tmpDate2 = Trim(tmpDate2)
+        For k = 0 To 20
+            
+            tmpDate2 = Application.WorksheetFunction.Substitute(tmpDate2, mm(k), mmm(k))
+            
+        Next
+
+        x.Value = tmpDate2
+         
+    End If
+ 
+Next 'next x
+  
+
+End Sub
+
+Function ab2c(a, b) As Double
+' find the hypertenue side of a pythagorus triangle
+ c = a * a + b * b
+ c = Sqr(c)
+ ab2c = c
+End Function
+Function lastPart(Cell, marker) As String
+'extract last part (e.g) file name in a long string path
+len0 = Len(Cell)
+len1 = Len(Replace(Cell, marker, ""))
+tmpVal = Application.WorksheetFunction.Substitute(Cell, marker, "|", len0 - len1)
+tmpFind = Application.WorksheetFunction.Find("|", tmpVal)
+tmpLastPart = Right(Cell, len0 - tmpFind)
+lastPart = tmpLastPart
+End Function
+Function lastXPart(Cell, marker, index) As String
+'extract last part (e.g) file name in a long string path
+len0 = Len(Cell)
+len1 = Len(Replace(Cell, marker, ""))
+tmpVal = Application.WorksheetFunction.Substitute(Cell, marker, "|", len0 - len1 - index + 1)
+tmpFind = Application.WorksheetFunction.Find("|", tmpVal)
+tmpLastPart = Right(Cell, len0 - tmpFind)
+lastXPart = tmpLastPart
+End Function
+
+Function firstPart(Cell, marker) As String
+'remove last part (e.g) file name in a long string path
+len0 = Len(Cell)
+len1 = Len(Replace(Cell, marker, ""))
+tmpVal = Application.WorksheetFunction.Substitute(Cell, marker, "|", len0 - len1)
+tmpFind = Application.WorksheetFunction.Find("|", tmpVal)
+tmpFirstPart = Left(Cell, tmpFind - 1)
+firstPart = tmpFirstPart
+End Function
+Function firstXPart(Cell, marker, index) As String
+'remove last part (e.g) file name in a long string path
+len0 = Len(Cell)
+len1 = Len(Replace(Cell, marker, ""))
+tmpVal = Application.WorksheetFunction.Substitute(Cell, marker, "|", index)
+tmpFind = Application.WorksheetFunction.Find("|", tmpVal)
+tmpFirstPart = Left(Cell, tmpFind - 1)
+firstXPart = tmpFirstPart
+End Function
+Sub findNrow()
+Dim w As String
+Dim s As String
+Dim col As String
+Dim wkb As Excel.Workbook
+Dim wks As Excel.Worksheet
+
+Set wkb = ActiveWorkbook.Name
+Set wks = ActiveSheet.Name
+'Set col = ActiveSheet.
+
+'w = "Code for 2014 Census combine Final (WVT).xlsx"
+'s = "2014 database (28-8-17) (2)"
+'col = "D"
+
+LastRow = findLastROW(w, s, col)
+
+MsgBox ("the last row number is " & LastRow)
+End Sub
+
+Private Function findLastROW(Workbook As String, sheet As String, col As String) As Long
+' finding the last row by checking two more empty row
+' date: 3 Sep 2017
+' Code ref: https://www.pcreview.co.uk/threads/examples-of-vba-code-to-scan-all-rows-and-perform-a-function-conditionally.1005512/
+Dim Rng As Range
+Dim J As Long
+Dim LastRow As Long
+Dim wkb As Excel.Workbook
+Dim wks As Excel.Worksheet
+
+Set wkb = Excel.Workbooks(Workbook)
+Set wks = wkb.Worksheets(sheet)
+
+
+If Right(Workbook, 3) = "xls" Then
+    LastRow = 65536
+Else
+    LastRow = 100000
+End If
+Set Rng = wks.Range(col & 2, col & LastRow)
+
+For J = 1 To LastRow - 1
+    If Rng(J).Value = "" Then
+        If (LastRow - J) < 100 Then ' for the last 100 rows loop size to shrink
+            ii = J - LastRow
+        Else
+            ii = 100
+        End If
+        For I = 1 To ii
+            If Rng(J + I).Value = "" Then
+                If I = ii Then ' make sure next 100 rows are empty
+                    findLastROW = J
+                    GoTo Exit_sub:
+                'Else
+                    'GoTo skip_loop:
+                End If
+            Else
+              GoTo skip_loop:
+            End If
+        Next
+
+    End If
+skip_loop:
+Next J
+
+Exit_sub:
+
+End Function
+Private Sub vtCoder()
+' codes are filtered first with TS name
+' find vtcode for VT in a current sheet (of target workbook) from a master vt code workbook (source).
+' target sheets are named with Township names
+' this township name will be used to defined the range of repective vt code block to avoid the same vt name found in other township
+' then vt name will be matched and finally matched vt code will be inserted in colum H at same row.
+
+Dim tW As String, tS As String, tVtCol As String, tVtCodeCol As String
+Dim sW As String, sS As String, sVtCol As String, sVtCodeCol As String, sTsCol As String
+
+Dim sRngVt As Range, sRngVtCode As Range, sRngTs As Range
+Dim tRngVt As Range, tRngVtCode As Range
+
+Dim swkb, twkb As Excel.Workbook
+Dim swks, twks As Excel.Worksheet
+
+'Target workbook
+Set twkb = ActiveWorkbook
+Set twks = twkb.ActiveSheet
+tW = twkb.Name
+tS = twks.Name
+
+tVtCol = "C" 'vt name column
+tVtCodeCol = "H" ' col to add vt codes found
+'tsCell = "C7" ' township name in burmese in the sheet
+
+'source workbook
+sW = "Code for 2014 Census combine Final (WVT).xlsx" ' workbook where the code list is
+sS = "2014 database (28-8-17) (2)" ' worksheet where the code list is
+sTsCol = "H" ' H = eng Column with township  names in source
+'sTsCol = "I" 'I = burmese Column with township  names in source
+sVtCol = "L" ' Column with vt burmese name in source
+sVtCodeCol = "N" ' column with vt code in source
+Set swkb = Excel.Workbooks(sW)
+Set swks = swkb.Worksheets(sS)
+
+'finding the last rows with data
+sLastRow = findLastROW(sW, sS, sTsCol) ' finding the last rows in the source sheet
+tLastRow = findLastROW(tW, tS, tVtCol) 'find the last row in target sheet
+
+'find the range of data with ts name = activesheet , without extra number
+
+Set sRngTs = swks.Range(sTsCol & 1, sTsCol & sLastRow)
+For I = 0 To sLastRow - 1
+    If LCase(xtext(sRngTs(I).Value)) = LCase(xtext(tS)) Then
+     GoTo skip_i:
+    End If
+Next
+skip_i:
+For J = sLastRow - 1 To 0 Step -1
+    If LCase(xtext(sRngTs(J).Value)) = LCase(xtext(tS)) Then
+        GoTo skip_j:
+    End If
+Next
+skip_j:
+
+'MsgBox ("i:" & i + 1 & " ; j:" & J + 1 & "; targetrow: " & targetRow & "; sourece:" & sourceRow)
+
+Set sRngVt = swks.Range(sVtCol & I + 1, sVtCol & J + 1)
+Set sRngVtCode = swks.Range(sVtCodeCol & I + 1, sVtCodeCol & J + 1)
+Set tRngVt = twks.Range(tVtCol & 2, tVtCol & tLastRow)
+Set tRngVtCode = twks.Range(tVtCodeCol & 2, tVtCodeCol & tLastRow)
+
+matchCount = 0
+
+For k = 1 To tLastRow - 1
+    
+    If tRngVt(k) = "" Then
+continue:
+    Else ' match vt name and add vtcode
+        For l = 0 To J - I + 1
+            If tRngVt(k) = sRngVt(l) Then
+                tRngVtCode(k) = sRngVtCode(l)
+                matchCount = matchCount + 1
+            End If
+        Next
+        
+    End If
+
+Next
+MsgBox ("matching finished." & matchCount & " out of " & J - I + 1 & " matched")
+
+End Sub
+
+Private Sub VillCoder()
+'Public Sub VillCoder()
+'
+' read serial number assinged under GAD and DoP column and create codes (VTCODE + Serial) in a separate columns
+'
+Dim wkb As Excel.Workbook
+Dim wks As Excel.Worksheet
+
+Set wkb = ActiveWorkbook
+Set wks = ActiveSheet
+
+veryFristVtflag = 1 ' when first VT Code is found,
+
+LastRow = findLastROW(wkb.Name, wks.Name, "H") ' the last row for last loop
+
+Set vtCodeRange = wks.Range("H1", "H" & LastRow) '
+For I = 0 To LastRow - 1
+  If vtCodeRange(I) = "" Then
+continue:
+  Else
+    ' add column heading for codes
+    If veryFristVtflag = 1 Then
+        wks.Range("I" & I - 1).Value = "GAD_VillCode"
+     wks.Range("J" & I - 1).Value = "DoP_VillCode"
+    End If
+        veryFristVtflag = I 'this will make sure header is written once
+    
+    ' sub ranges for village name column, gad serial number column, dop serial number column ..
+    '   and column for GAD codes and DoP Codes
+    Set villRange = wks.Range("F" & I + 2, "F" & I + 100)
+    Set gadSrRange = wks.Range("D" & I + 2, "D" & I + 100) 'sr number of villages under GAD col
+    Set dopSrRange = wks.Range("E" & I + 2, "E" & I + 100) 'sr number of villages under dop col
+    Set gadCodeRange = wks.Range("I" & I + 2, "I" & I + 100) 'cells for GAD codes
+    Set dopCodeRange = wks.Range("J" & I + 2, "J" & I + 100) 'cells for GAD codes
+    
+    ' vtcode generation and adding to the columns
+    For J = 0 To 99 ' assumed there cannot be more than 100 villages under a village tract
+        If villRange(J) = "" Then
+            GoTo skip_j:
+        Else
+            If dopSrRange(J) Then
+                villCode = dopSrRange(J)
+                If (Len(villCode) = 1) Then 'check 1 or 2 digits
+                    villCode = "0" & villCode
+                End If
+                dopCodeRange(J) = "'" & vtCodeRange(I) & villCode
+            End If
+            If gadSrRange(J) Then
+                villCode = gadSrRange(J)
+                If (Len(villCode) = 1) Then 'check 1 or 2 digits
+                    villCode = "0" & villCode
+                End If
+                gadCodeRange(J) = "'" & vtCodeRange(I) & villCode
+            End If
+        End If
+        
+    Next
+  End If
+skip_j:
+Next
+
+
+End Sub
+Sub WorksheetLoop()
+'''code source: https://support.microsoft.com/en-us/help/142126/macro-to-loop-through-all-worksheets-in-a-workbook
+Dim WS_Count As Integer
+Dim I As Integer
+
+' Set WS_Count equal to the number of worksheets in the active
+' workbook.
+WS_Count = ActiveWorkbook.Worksheets.Count
+
+' Begin the loop.
+For I = 1 To WS_Count
+   ActiveWorkbook.Worksheets(I).Activate 'acttivate sheet one by one for below sub work on active sheet
+   
+   ' Insert your code here.
+   VillCoder 'call villCoder sub
+   
+   ' the loop by displaying the worksheet name in a dialog box.
+   'MsgBox ActiveWorkbook.Worksheets(I).Name
+
+Next I
+
+End Sub
+
+Sub datatype()
+' draft codes
+Dim aString As String
+myRange = "A1:A4"
+myRange2 = "B1:B4"
+myRange3 = "C1:C4"
+Set myselection = Range(myRange)
+Set myselection2 = Range(myRange2) 'ActiveCell.Offset(0, nOffset).Range(myRange)
+Set myselection3 = Range(myRange3)
+
+'Set VarType = myselection.Offset(0, 1)
+counter = myselection.Count
+
+For I = 1 To counter
+    myselection2(I) = TypeName(myselection(I).Value)
+    myselection3(I) = VarType(myselection(I))
+    'force type conversion
+    'myselection(i).NumberFormat = "0"
+Next
+myselection.NumberFormat = "@"
+'"dd/mm/yy"
+' "@" for text,
+End Sub
+
