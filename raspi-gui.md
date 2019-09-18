@@ -1,7 +1,8 @@
-How to run GUI on raspberry pi if it cannot show up start up and configration does not work
-boot your raspberry pi
-scan IP address and find the one with the correct mac addrress
-#Putty
+# How to run GUI on raspberry pi 
+if it cannot show up start up and configration does not work
+-boot your raspberry pi
+- on your laptop, scan IP address and find the one with the correct mac addrress
+- 
 open putty on your laptop
  - enter ip address
  - log in with raspberry admin account
