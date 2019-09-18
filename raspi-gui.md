@@ -1,11 +1,10 @@
 # How to run GUI on raspberry pi 
-if it cannot show up start up and configration does not work
--boot your raspberry pi
+This is for the case when GUI does show up start up no matter how many time you have choosen GUI option in configuration file.
+- boot your raspberry pi
 - on your laptop, scan IP address and find the one with the correct mac addrress
-- 
-open putty on your laptop
- - enter ip address
- - log in with raspberry admin account
+- open putty on your laptop
+ - - enter ip address
+ - - log in with raspberry admin account
 #install vncserver if not done yet
 sudo apt-get install realvnc-vnc-server
  - sudo raspi-config
