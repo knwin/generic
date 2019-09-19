@@ -17,7 +17,7 @@ this will show ip address as well
 ## VNC viewer
 open vnc viewer on your laptop
 
-type in ip address of raspberry pi - voila!
+type in ip address of raspberry pi with port 1, example 192.168.1.100:1 - voila!
 
 ## Running Jupyter notebook server on raspberry pi 
 ref: https://jupyter-notebook.readthedocs.io/en/stable/config_overview.html
