@@ -1,3 +1,6 @@
+# Ho to solve no signal on your monitor after first time OS installed in SD card.
+https://www.raspberrypi.org/forums/viewtopic.php?t=34061&fbclid=IwAR35HONvDZvdruf6JJi4LQvdg5IM6bNW-FTdeFZtOe1DOmjm12q4UMDBnvc
+
 # How to run GUI on raspberry pi 
 This is for the case when GUI does show up start up no matter how many time you have choosen GUI option in configuration file.
 - boot your raspberry pi
