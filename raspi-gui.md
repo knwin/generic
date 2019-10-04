@@ -39,6 +39,7 @@ open vnc viewer on your laptop
 
 # How to install PIP
 you will not have pip in the raspbarian OS. So you need to install it first for adding moudles later
+
 `sudo apt install python3-pip`
 
 now you have pip and install other module as follow
