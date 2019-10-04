@@ -66,3 +66,11 @@ save and type
 - python3 -m jupyterlab --no-browser
 
 now you can access jupyterlab @ raspberrypi:8888 port on your browser
+
+# Geopandas installation fail due to fiona module problem
+install gdal dev `sudo apt-get install libgdal-dev`, then install geopandas
+
+# PyPrj installation fail
+install from git hub `pip install git+https://github.com/jswhit/pyproj.git`
+
+if git is not installed `sudo apt-get install git`
