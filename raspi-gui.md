@@ -14,6 +14,7 @@ If you see a problem with the red colour - either absent, or interference - then
 - sudo raspi-config
 - interfacing option > enable SSH
 - scan the ip with ip scanner or ifconfig on pi
+
 open putty
 - add ip address
 
