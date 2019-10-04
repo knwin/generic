@@ -10,6 +10,13 @@ Using a shorter or better quality HDMI cable might help.
 Make sure your Pi's power supply delivers 1A and not 500mA.
 If you see a problem with the red colour - either absent, or interference - then try a boost. However it might simply be that the display requires a stronger signal than the Pi can give.
 
+# Hwo to access via putty
+-sudo raspi-config
+-interfacing option > enable SSH
+-scan the ip with ip scanner or ifconfig on pi
+open putty
+- add ip address
+
 # How to run GUI on raspberry pi 
 This is for the case when GUI does show up start up no matter how many time you have choosen GUI option in configuration file.
 - boot your raspberry pi
