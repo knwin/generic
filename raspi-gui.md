@@ -37,6 +37,13 @@ this will show ip address as well
 ## VNC viewer
 open vnc viewer on your laptop
 
+# How to install PIP
+you will not have pip in the raspbarian OS. So you need to install it first for adding moudles later
+`sudo apt install python3-pip`
+
+now you have pip and install other module as follow
+`sudo python3 -m pip install yourmoudule`
+
 type in ip address of raspberry pi with port 1, example 192.168.1.100:1 - voila!
 
 ## Running Jupyter notebook server on raspberry pi 
