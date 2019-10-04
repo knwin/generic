@@ -1,6 +1,15 @@
 # Ho to solve no signal on your monitor after first time OS installed in SD card.
 https://www.raspberrypi.org/forums/viewtopic.php?t=34061&fbclid=IwAR35HONvDZvdruf6JJi4LQvdg5IM6bNW-FTdeFZtOe1DOmjm12q4UMDBnvc
 
+The Pi outputs a relatively weak HDMI signal. Some devices may not immediately notice the Pi's HDMI or may not do the negotiation.
+Setting the hdmi_force_hotplug=1 makes sure the Pi believes the monitor/TV is really there.
+You might also need to set config_hdmi_boost=4 or even higher (up to 9) if your display needs a stronger signal.
+If the display is a computer monitor, use hdmi_group=1 and if it is an older TV, try hdmi_group=2.
+Do not set hdmi_safe=1 as that overrides many of the previous options.
+Using a shorter or better quality HDMI cable might help.
+Make sure your Pi's power supply delivers 1A and not 500mA.
+If you see a problem with the red colour - either absent, or interference - then try a boost. However it might simply be that the display requires a stronger signal than the Pi can give.
+
 # How to run GUI on raspberry pi 
 This is for the case when GUI does show up start up no matter how many time you have choosen GUI option in configuration file.
 - boot your raspberry pi
