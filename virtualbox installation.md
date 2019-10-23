@@ -1,7 +1,7 @@
 
 |	|Steps	|Action/Input|
 |	|-------|------------|
-|A	|VM Virtual Box installation	|Install Oracle VM VB 5.2.8|
+A	VM Virtual Box installation	Install Oracle VM VB 5.2.8
 B	Hardware Virtualization Enabling from BIOS	
 	-	Restart computer	
 	-	F12 to enter BIOS mode	
