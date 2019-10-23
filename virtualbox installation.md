@@ -1,14 +1,14 @@
 
 |#|Steps	|Action/Input|
 |-|-------|------------|
-|A	|VM Virtual Box installation	|Install Oracle VM VB 5.2.8|
-|B	|Hardware Virtualization Enabling from BIOS| |	
+|A	|__VM Virtual Box installation__	|Install Oracle VM VB 5.2.8|
+|B	|__Hardware Virtualization Enabling from BIOS__| |	
 | |	-	Restart computer| |	
 | |	-	F12 to enter BIOS mode| |	
 | |	-	Menu > Security	Enable Virtualization| |
 | |		Enable Virtualization| |
 | |	Reboot the computer| |	
-|C|Setup to install OS on VM||
+|C|__Setup to install OS on VM__||
 |0|-|Start VM||
 |1|-|Add New OS||
 |2|-|Settings||
@@ -17,7 +17,7 @@
 ||  System>CUP|2 CPU|
 ||  Display>Video Memory|16 MB|
 ||  Storage> Add Optical Device|Choose Disk > Select Ubuntu ISO file|
-|B|Ubantu 16.04.4 LTS 64 bit installation||
+|B|__Ubantu 16.04.4 LTS 64 bit installation__||
 |0|VM Vbox > Start Ubuntu64_Server||
 |1|Language|English|
 |2|Install|Install Ubuntu Server|
