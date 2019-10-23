@@ -1,13 +1,13 @@
 
 |#|Steps	|Action/Input|
 |-|-------|------------|
-A	VM Virtual Box installation	Install Oracle VM VB 5.2.8
-B	Hardware Virtualization Enabling from BIOS	
-	-	Restart computer	
-	-	F12 to enter BIOS mode	
-	-	Menu > Security	Enable Virtualization
-		Enable Virtualization
-	Reboot the computer	
+|A	|VM Virtual Box installation	|Install Oracle VM VB 5.2.8|
+|B	|Hardware Virtualization Enabling from BIOS| |	
+| |	-	Restart computer| |	
+| |	-	F12 to enter BIOS mode| |	
+| |	-	Menu > Security	Enable Virtualization| |
+| |		Enable Virtualization| |
+| |	Reboot the computer| |	
 C	Setup to install OS on VM	
 0	-	Start VM	
 1	-	Add New OS	
