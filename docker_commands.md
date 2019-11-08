@@ -33,8 +33,23 @@ installed will be lost. Therefore you need to freeze the running container as a 
 ### create new image with newly installed application
 `docker commit container_id new_imagename:version`
 
+Note: the new image is somehow child image of previous one and thus you may need to create the stanalone image from scratch using DockerFile.
+
 ### removing images
 `docker images -a` to see the image ids, copy the image id to remove in next step
 
 `docker rmi -f image_id image_id`
+
+### how to run jupyterlab
+`docker run -it -d -p 8888:8888 image_name:tag`
+
+example: docker run -it -d -p 8888:8888 datascience-python3:version3
+
+(if you dont see any messages after the command container is running quitely and you may need to get into it with docker attch command. When inside the container run ..)
+
+`python3 -m jupyterlab --allow-root  --ip=0.0.0.0 --port=8888`
+
+you will see a few lines of infor with toke information like `http://127.0.0.1:8888/?token=f95ae233b84ca517ddc049c57b8219a4589ce117f8d0e5ee` copy it and paste into your browser to start Jupyterlab
+
+
 
