@@ -5,6 +5,8 @@ you may need to create an image with different components. You write these in th
 
 https://medium.com/@yvescallaert/docker-intro-building-a-python-3-image-62031d0b7e39
 
+https://medium.com/faun/how-to-build-a-docker-container-from-scratch-docker-basics-a-must-know-395cba82897b
+
 ### get an image from cloud
 `docker pull imagename`
 
