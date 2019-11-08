@@ -40,12 +40,14 @@ Note: the new image is somehow child image of previous one and thus you may need
 
 `docker rmi -f image_id image_id`
 
+for more info on "How To Remove Docker Containers, Images, Volumes, and Networks": https://linuxize.com/post/how-to-remove-docker-images-containers-volumes-and-networks/
+
 ### how to run jupyterlab
 `docker run -it -d -p 8888:8888 image_name:tag`
 
 example: docker run -it -d -p 8888:8888 datascience-python3:version3
 
-(if you dont see any messages after the command container is running quitely and you may need to get into it with docker attch command. When inside the container run ..)
+(if you dont see any messages after the command, the container is running quitely in the background. You can check it with `docker ps -a` and copy the id to get into it with `docker attch id` command. When inside the container, run below cmd..)
 
 `python3 -m jupyterlab --allow-root  --ip=0.0.0.0 --port=8888`
 
