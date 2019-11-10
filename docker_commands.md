@@ -62,4 +62,4 @@ you will see a few lines of infor with toke information like `http://127.0.0.1:8
  3. Test the drive mount command shown in docker desktop. If you dont see anything, you have mounting problem.
  4. `docker run -it -v c:/WingPy_scripts/jupyter_notebooks/Generic:/data -p 8888:8888 datascience-python3:version3` to run the start the container and the type `python3 -m jupyterlab --allow-root --no-browser --ip=0.0.0.0 --port=8888` to start jupyterlab
  5. or you can combine two commands above into one line `docker run -it -v c:/WingPy_scripts/jupyter_notebooks/Generic:/data -p 8888:8888 datascience-python3:version3 python3 -m jupyterlab --allow-root --no-browser --ip=0.0.0.0 --port=8888`
- 6. Copy the line with token on the commnda windwos and paste into browser. you should see your subfolders and files under `data` folder in the left panel of Jupyterlab
+ 6. Copy the line with token on the command windows and paste into browser. You should see your subfolders and files under `data` folder in the left panel of Jupyterlab and able to create new files when required.
