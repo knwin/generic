@@ -57,8 +57,9 @@ you will see a few lines of infor with toke information like `http://127.0.0.1:8
 
 
 ### How to run jupyterlab with access to folders in your drive
- 1. Enable drive in docker desktop setting. (Note: you need to enter windows password to enalbe drive access and if there are special characters in password, these would sometime cause problem and thus you many need to reset the windows password)
- 2. Test the drive mount command shown in docker desktop. If you dont see anything, you have mounting problem
- 3. `docker run -it -v c:/WingPy_scripts/jupyter_notebooks/Generic:/data -p 8888:8888 datascience-python3:version3` to run the start the container and the type `python3 -m jupyterlab --allow-root --no-browser --ip=0.0.0.0 --port=8888` to start jupyterlab
- 4. or you can combine two commands above into one line `docker run -it -v c:/WingPy_scripts/jupyter_notebooks/Generic:/data -p 8888:8888 datascience-python3:version3 python3 -m jupyterlab --allow-root --no-browser --ip=0.0.0.0 --port=8888`
- 5. Copy the line with token on the commnda windwos and paste into browser. you should see your subfolders and files under `data` folder in the left panel of Jupyterlab
+ 1. Enable the drive sharing in windows explorer first. Give access to everyone read/write or by user.
+ 2. Select the drive in the docker desktop > setting > Shared Drives. (Note: you need to enter windows password to enalbe drive access and if there are special characters in password, these would sometime cause problem and thus you many need to reset the windows password)
+ 3. Test the drive mount command shown in docker desktop. If you dont see anything, you have mounting problem.
+ 4. `docker run -it -v c:/WingPy_scripts/jupyter_notebooks/Generic:/data -p 8888:8888 datascience-python3:version3` to run the start the container and the type `python3 -m jupyterlab --allow-root --no-browser --ip=0.0.0.0 --port=8888` to start jupyterlab
+ 5. or you can combine two commands above into one line `docker run -it -v c:/WingPy_scripts/jupyter_notebooks/Generic:/data -p 8888:8888 datascience-python3:version3 python3 -m jupyterlab --allow-root --no-browser --ip=0.0.0.0 --port=8888`
+ 6. Copy the line with token on the commnda windwos and paste into browser. you should see your subfolders and files under `data` folder in the left panel of Jupyterlab
