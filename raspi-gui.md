@@ -39,7 +39,9 @@ open vnc viewer on your laptop
 ## Schedule task
 - crontab -e
 will open crontab file in nano editor. Add following for some task at boot and some at specific hour
+
 use `m h  dom mon dow   command` for time setting
+
 `@reboot python3 -m jupyterlab --no-browser --port=8889`
 
 `@reboot vncserver`
