@@ -36,6 +36,16 @@ This is for the case when GUI does show up start up no matter how many time you 
 this will show ip address as well
 ## VNC viewer
 open vnc viewer on your laptop
+## Schedule task
+- crontab -e
+will open crontab file in nano editor. Add following for some task at boot and some at specific hour
+use `m h  dom mon dow   command` for time setting
+`@reboot python3 -m jupyterlab --no-browser --port=8889`
+
+`@reboot vncserver`
+
+`0 15 * * * python3 /home/pi/JupyterNoteBooks/DMH/DMH_riverlevel_scraping_daily.$`
+
 
 # How to install PIP
 you will not have pip in the raspbarian OS. So you need to install it first for adding moudles later
