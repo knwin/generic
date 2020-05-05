@@ -1576,3 +1576,90 @@ myselection.NumberFormat = "@"
 ' "@" for text,
 End Sub
 
+Function ll_dist2(lat0, lon0, lat1, lon1) As Double
+'Haversine
+'formula:    a = sin²(?f/2) + cos f1 · cos f2 · sin²(??/2)
+'c = 2 · atan2( va, v(1-a) )
+'d = R · c
+'where   f is latitude, ? is longitude, R is earth’s radius (mean radius = 6,371km);
+'note that angles need to be in radians to pass to trig functions!
+'JavaScript:
+
+'var R = 6371e3; // metres
+'var f1 = lat1.toRadians();
+'var f2 = lat2.toRadians();
+'var ?f = (lat2-lat1).toRadians();
+'var ?? = (lon2-lon1).toRadians();
+
+'var a = Math.sin(?f/2) * Math.sin(?f/2) +
+'        Math.cos(f1) * Math.cos(f2) *
+ '       Math.sin(??/2) * Math.sin(??/2);
+'var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+'var d = R * c;
+lat2 = Excel.WorksheetFunction.Radians(lat0)
+lon2 = Excel.WorksheetFunction.Radians(lon0)
+lat3 = Excel.WorksheetFunction.Radians(lat1)
+lon3 = Excel.WorksheetFunction.Radians(lon1)
+
+dLat = lat3 - lat2
+dLon = lon3 - lon2
+
+r = 6371000 ' earth radius in meter
+
+a = (Sin(dLat / 2) * Sin(dLat / 2)) + (Cos(lat2) * Cos(lat3) * Sin(dLon / 2) * Sin(dLon / 2))
+C = 2 * Excel.WorksheetFunction.Atan2(Sqr(a), Sqr(1 - a))
+ll_dist = r * C
+
+End Function
+
+Function ll_dist(lat0, lon0, lat1, lon1)
+' dX = cos lat1 . cos lon1 - cos lat0 . cos lon1
+' dY = cos lat1 . sin lon1 - cos lat0 . sin lon1
+' dZ = sin lat1 - sin lat0;
+' C = sqrt ( dX^2 + dY^2 + dZ^2)
+' arcAngle = 2 arcsin C/2
+' dist = 2 pi r (arcAngle/360)
+lat0 = Excel.WorksheetFunction.Radians(lat0)
+lon0 = Excel.WorksheetFunction.Radians(lon0)
+lat1 = Excel.WorksheetFunction.Radians(lat1)
+lon1 = Excel.WorksheetFunction.Radians(lon1)
+
+dx = Cos(lat1) * Cos(lon1) - Cos(lat0) * Cos(lon0)
+dy = Cos(lat1) * Sin(lon1) - Cos(lat0) * Sin(lon0)
+dz = Sin(lat1) - Sin(lat0)
+C = Sqr(dx * dx + dy * dy + dz * dz)
+
+r = 6371000 ' earth radius in meter
+dArc = 2 * Excel.WorksheetFunction.Asin(C / 2 / r)
+
+
+
+ll_dist = r * dArc
+End Function
+Function eu_dist(x1, y1, x2, y2) As Double
+'Eucledan distance
+dx = x1 - x2
+dy = y1 - y2
+eu_dist = Sqr(dx * dx + dy * dy)
+
+End Function
+
+Function ph_m2e(cell) As String
+'convert myanmar unicode phone number to english number
+' 2020 05 04
+tmp = ""
+
+For I = 1 To Len(cell)
+    a = Mid(cell, I, 1)
+    mUnicode = Application.WorksheetFunction.Unicode(a)
+    If (mUnicode > 4159) And (mUnicode < 4170) Then
+        tmp = tmp & Replace(Str(mUnicode Mod 416), " ", "")
+    Else
+        tmp = tmp & a
+    End If
+
+Next
+
+ph_m2e = tmp
+End Function
