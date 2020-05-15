@@ -1663,3 +1663,21 @@ Next
 
 ph_m2e = tmp
 End Function
+
+Function ph_e2m(cell) As String
+'convert phone number to myanmar unicode number
+tmp = ""
+For I = 1 To Len(cell)
+    a = Mid(cell, I, 1)
+    mUnicode = Application.WorksheetFunction.Unicode(a)
+    If (mUnicode > 47) And (mUnicode < 58) Then
+        mUnichar = Application.WorksheetFunction.Unichar(mUnicode + 4112)
+        tmp = tmp & mUnichar
+    Else
+        tmp = tmp & a
+    End If
+
+Next
+
+ph_e2m = tmp
+End Function
