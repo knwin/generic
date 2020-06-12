@@ -10,11 +10,15 @@ https://medium.com/faun/how-to-build-a-docker-container-from-scratch-docker-basi
 ### get an image from cloud
 `docker pull imagename`
 
-### run and image
+### run an image
 `docker run -it imagename:version`
 
 e.g docker run -t ubuntu:latest
 
+### stop running container
+`docker stop container_id`
+
+e.g docker stop f234dwef
 
 ### to get out of runing container
 
