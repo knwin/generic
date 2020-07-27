@@ -20,15 +20,18 @@ open cmd.exe as adminstrator
 + mkdir arcpy_includes
 + cd arcpy_includes
 + copyp c:\Python27\ArcGIS10.7\Lib\site-packages\Desktop10.7.pth  OR _you can just copy from windows explorer_
+ - into c:\Python27\ArcGIS10.7\arcpy_includes and into cC:\Python27\ArcGIS10.7\venv\jupyter\Lib\site-packages
+ 
 + mklink\D numpy c:\Python27\ArcGIS10.7\Lib\site-packages\numpy 
 
 ## Prepare for Jupyter lab
++ install jupyter lab: C:\Python27\ArcGIS10.7\venv\jupyter\Scripts\python -m pip install jupyter-lab 
 + copy C:\Python27\ArcGIS10.7\venv\jupyter\Scripts\activate.bat as jupyterlab_activate.bat
 + edit jupyterlab_activate.bat
   + add _jupyter-lab.exe_ at the end of file
 
 ## Create a widnows short cut for Jupyter lab
-+ create a shortcut by right click over jupyterlab_lab.bat file and select shortcut to desktop
++ create a shortcut by right click over jupyterlab_activate.bat file and select shortcut to desktop
 + open properties of the _short cut_
   + add path for home folder for jupyter notebooks in _"Start in"_
   + e.g C:\WingPy_scripts\jupyter_notebooks\ArcGIS
