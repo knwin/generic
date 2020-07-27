@@ -20,8 +20,7 @@ open cmd.exe as adminstrator
 + mkdir arcpy_includes
 + cd arcpy_includes
 + copyp c:\Python27\ArcGIS10.7\Lib\site-packages\Desktop10.7.pth  OR _you can just copy from windows explorer_
- - into c:\Python27\ArcGIS10.7\arcpy_includes and into cC:\Python27\ArcGIS10.7\venv\jupyter\Lib\site-packages
- 
+  - into c:\Python27\ArcGIS10.7\arcpy_includes and into cC:\Python27\ArcGIS10.7\venv\jupyter\Lib\site-packages 
 + mklink\D numpy c:\Python27\ArcGIS10.7\Lib\site-packages\numpy 
 
 ## Prepare for Jupyter lab
