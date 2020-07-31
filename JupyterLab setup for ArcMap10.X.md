@@ -1,4 +1,5 @@
 # How to setup Jupyter for Arcgis 10.x
+(here ArcGIS 10.7 as example, change to actural version)
 
 + open cmd.exe as adminstrator
  + cd python27\arcgis10.7
@@ -21,7 +22,7 @@ open cmd.exe as adminstrator
 + cd arcpy_includes
 + copy c:\Python27\ArcGIS10.7\Lib\site-packages\Desktop10.7.pth from windows explorer into_
   - into c:\Python27\ArcGIS10.7\arcpy_includes 
-  - into cC:\Python27\ArcGIS10.7\venv\jupyter\Lib\site-packages 
+  - into c:\Python27\ArcGIS10.7\venv\jupyter\Lib\site-packages 
 + mklink\D numpy c:\Python27\ArcGIS10.7\Lib\site-packages\numpy 
 
 ## Prepare for Jupyter lab
@@ -33,7 +34,7 @@ open cmd.exe as adminstrator
 ## Create a widnows short cut for Jupyter lab
 + create a shortcut by right click over jupyterlab_activate.bat file and select shortcut to desktop
 + open properties of the _short cut_
-  + add path for home folder for jupyter notebooks in _"Start in"_ e.g _C:\WingPy_scripts\jupyter_notebooks\ArcGIS_
+  + add path for home folder for jupyter notebooks in _"Start in"_ e.g _C:\jupyter_notebooks\ArcGIS_
   
   Now you double click the short cut and juputer lab will open
 
