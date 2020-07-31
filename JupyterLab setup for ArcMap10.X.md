@@ -5,7 +5,7 @@
  + cd python27\arcgis10.7
  + python -m pip install virtualenv
  + python -m virtualenv venv\jupyter
- + cd venv\jyputer
+ + cd venv\jupyter
  + python -m pip install jupyter
  + python -m pip install jupyter-lab
  + install any module you want to install here
