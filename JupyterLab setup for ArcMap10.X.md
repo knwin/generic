@@ -29,6 +29,7 @@ open cmd.exe as adminstrator
 + install jupyter lab: _C:\Python27\ArcGIS10.7\venv\jupyter\Scripts\python -m pip install jupyterlab_ 
 + copy C:\Python27\ArcGIS10.7\venv\jupyter\Scripts\activate.bat as jupyterlab_activate.bat in the same folder
 + edit jupyterlab_activate.bat with notepad
+  + add __set "PYTHONPATH=C:\Python27\ArcGIS10.7\Lib\site-packages"_ at second line
   + add _jupyter-lab.exe_ at the end of file
 
 ## Create a widnows short cut for Jupyter lab
