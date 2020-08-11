@@ -7,7 +7,7 @@
  + python -m virtualenv venv\jupyter
  + cd venv\jupyter
  + python -m pip install jupyter
- + python -m pip install jupyter-lab
+ + python -m pip install jupyterlab
  + install any module you want to install here
 
 ## link to Arcpy and numpy modules
@@ -23,10 +23,10 @@ open cmd.exe as adminstrator
 + copy c:\Python27\ArcGIS10.7\Lib\site-packages\Desktop10.7.pth from windows explorer into_
   - into c:\Python27\ArcGIS10.7\arcpy_includes 
   - into c:\Python27\ArcGIS10.7\venv\jupyter\Lib\site-packages 
-+ mklink\D numpy c:\Python27\ArcGIS10.7\Lib\site-packages\numpy 
++ mklink/D numpy c:\Python27\ArcGIS10.7\Lib\site-packages\numpy 
 
 ## Prepare for Jupyter lab
-+ install jupyter lab: _C:\Python27\ArcGIS10.7\venv\jupyter\Scripts\python -m pip install jupyter-lab_ 
++ install jupyter lab: _C:\Python27\ArcGIS10.7\venv\jupyter\Scripts\python -m pip install jupyterlab_ 
 + copy C:\Python27\ArcGIS10.7\venv\jupyter\Scripts\activate.bat as jupyterlab_activate.bat in the same folder
 + edit jupyterlab_activate.bat with notepad
   + add _jupyter-lab.exe_ at the end of file
