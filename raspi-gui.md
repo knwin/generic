@@ -50,7 +50,7 @@ use `m h  dom mon dow   command` for time setting
 
 
 # How to install PIP
-you will not have pip in the raspbarian OS. So you need to install it first for adding moudles later
+you will not have pip in the raspbarian OS. So you need to install it first for adding modules later
 
 `sudo apt install python3-pip`
 
