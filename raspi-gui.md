@@ -1,4 +1,4 @@
-# Ho to solve no signal on your monitor after first time OS installed in SD card.
+# How to solve no signal on your monitor after first time OS installed in SD card.
 https://www.raspberrypi.org/forums/viewtopic.php?t=34061&fbclid=IwAR35HONvDZvdruf6JJi4LQvdg5IM6bNW-FTdeFZtOe1DOmjm12q4UMDBnvc
 
 The Pi outputs a relatively weak HDMI signal. Some devices may not immediately notice the Pi's HDMI or may not do the negotiation.
