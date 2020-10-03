@@ -57,7 +57,7 @@ return {
 ```
 in the list template use ```{expression/ts_mya}``` to get the value
 
-### Convert to Myanmar Admin names in the map popup
+### Convert to Myanmar Admin names in the Map Popup and Label
 Open Configure Pop-up menu and add as new expression
 
 ```
@@ -71,4 +71,6 @@ var ts_mya_name = ts_mya_list[ts_name];
 var confirmed = $datapoint.Confirmed;
 return {ts_mya[$feature["Township"]]);
 ```
-although variable name is appeared in the attribute list, actual usage will be {expression/expr#}
+Pop-up - although variable name is appeared in the attribute list, actual usage will be {expression/expr#}
+
+Label - variable name will be appeared in the field list
