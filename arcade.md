@@ -74,3 +74,5 @@ return {ts_mya[$feature["Township"]]);
 Pop-up - although variable name is appeared in the attribute list, actual usage will be {expression/expr#}
 
 Label - variable name will be appeared in the field list
+
+Other smart usage of Arcade examples - https://www.arcgis.com/home/group.html?id=dfe07fe13d154b67bbd7a38a2be90fd9#overview
