@@ -13,38 +13,6 @@ function onOpen() {
 };
 ```
 
-### Read attributes of a hosted feature layer via ESRI service url
-below code is modified from https://gist.github.com/varun-raj/5350595a730a62ca1954
-```
-function pullJSON() {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
-  var sheet = ss.getActiveSheet();
-  
-  var refSheet = ss.getSheetByName("Ref"); // sheet name with url string
-  var url = refSheet.getRange("B2").getValue(); // cell with url string
-
-  var response = UrlFetchApp.fetch(url); // get feed
-  var dataAll = JSON.parse(response.getContentText()); //
-  var dataSet = dataAll.features;
-  
-  var rows = [],
-      data;
-      
-  // get keys as column names
-  var headers = Object.keys(dataSet[0].attributes); 
-  rows.push(headers);
-  
-  // get values of attributes object
-  for (i = 0; i < dataSet.length; i++) {
-    data = Object.values(dataSet[i].attributes); 
-    rows.push(data); 
-  }
-
-  dataRange = sheet.getRange(4, 1, rows.length, data.length); // data.length makesure exact number of columns
-  dataRange.setValues(rows);
-}
-```
-
 ### get token from AGOL for REST API
 ```
 function getToken() {
@@ -120,3 +88,37 @@ function deleteFeatures(token, objectId_list, url){
   UrlFetchApp.fetch(url, requestOptions);
 }
 ```
+
+
+### Read attributes of a hosted feature layer via ESRI service url
+below code is modified from https://gist.github.com/varun-raj/5350595a730a62ca1954
+```
+function pullJSON() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = ss.getActiveSheet();
+  
+  var refSheet = ss.getSheetByName("Ref"); // sheet name with url string
+  var url = refSheet.getRange("B2").getValue(); // cell with url string
+
+  var response = UrlFetchApp.fetch(url); // get feed
+  var dataAll = JSON.parse(response.getContentText()); //
+  var dataSet = dataAll.features;
+  
+  var rows = [],
+      data;
+      
+  // get keys as column names
+  var headers = Object.keys(dataSet[0].attributes); 
+  rows.push(headers);
+  
+  // get values of attributes object
+  for (i = 0; i < dataSet.length; i++) {
+    data = Object.values(dataSet[i].attributes); 
+    rows.push(data); 
+  }
+
+  dataRange = sheet.getRange(4, 1, rows.length, data.length); // data.length makesure exact number of columns
+  dataRange.setValues(rows);
+}
+```
+
