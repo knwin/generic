@@ -52,7 +52,6 @@ function getToken() {
   var source = SpreadsheetApp.getActiveSpreadsheet();//self
   var settingSheet = source.getSheetByName("Settings"); 
   
-  
   var formData = {
     'client_id': 'my_client_id',
     'client_secret': 'my_client_secrete',
@@ -72,33 +71,27 @@ function getToken() {
 
 ### add features to a Hosted Feature Layer on AGOL
 ```
-  function addFeature(){
-        var milliseconds = new Date(date).getTime(); 
+  var url = "https://services8.arcgis.com/XXXXXXXX/arcgis/rest/services/FFFFFF/FeatureServer/0/applyEdits";
+  function addFeature(url){
         var data = [
                     {
                       "geometry" : {
-                        "x": 0,
-                        "y": 0,
+                        "x": 12.00,
+                        "y": 90.00,
                         "spatialReference": {
                           "wkid": 4326
                         }
                       },
                       "attributes" : {
-                        "Last_Update" : milliseconds,
-                        "Confirmed_total" : sourceData[0][1],
-                        "Death_total":sourceData[0][2],
-                        "Recovered_total":sourceData[0][3],
-                        "New_cases":sourceData[0][4],
-                        "New_deaths":sourceData[0][5],
-                        "New_recovered":sourceData[0][6],
-                        "Lat":0,
-                        "Lon":0
+                        "Field1" : field1_value,
+                        "Field2" : sourceData[0][1],
+                        "Field":sourceData[0][2],
                       }
                     }
                   ];
         data = JSON.stringify(data);
         var token = getToken();          
-        
+        var myHeaders = { 'Content-Type': 'application/x-www-form-urlencoded'};
         var requestOptions = {
           method: 'POST',
           headers: myHeaders,
@@ -111,9 +104,10 @@ function getToken() {
  };
 ```
 
-### Delete featues
+### Delete features
 ```
-function deleteFeatures(token, objectId_list){
+var url = "https://services8.arcgis.com/XXXXXXXX/arcgis/rest/services/FFFFFF/FeatureServer/0/applyEdits";
+function deleteFeatures(token, objectId_list, url){
 
   var myHeaders = { 'Content-Type': 'application/x-www-form-urlencoded'};    
   var objects_tobe_deleted = JSON.stringify(objectId_list);  
