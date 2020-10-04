@@ -13,8 +13,8 @@ function onOpen() {
 };
 ```
 
-### Read ESRI service url
-modified from https://gist.github.com/varun-raj/5350595a730a62ca1954
+### Read attributes of a hosted feature layer via ESRI service url
+below code is modified from https://gist.github.com/varun-raj/5350595a730a62ca1954
 ```
 function pullJSON() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
@@ -27,12 +27,11 @@ function pullJSON() {
   var dataAll = JSON.parse(response.getContentText()); //
   var dataSet = dataAll.features;
   
-  
   var rows = [],
       data;
       
   // get keys as column names
-  var headers = data = Object.keys(dataSet[0].attributes); 
+  var headers = Object.keys(dataSet[0].attributes); 
   rows.push(headers);
   
   // get values of attributes object
