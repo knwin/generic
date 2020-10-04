@@ -1,4 +1,4 @@
-# How to's in GScript
+# How to's in GScript for AGOL REST API
 
 ### How to add a function to a menu
 ```
