@@ -13,7 +13,7 @@ function onOpen() {
 };
 ```
 
-### get token from AGOL for REST API
+### Get token from AGOL for REST API
 ```
 function getToken() {
   var source = SpreadsheetApp.getActiveSpreadsheet();//self
@@ -23,7 +23,8 @@ function getToken() {
     'client_id': 'my_client_id',
     'client_secret': 'my_client_secrete',
     'grant_type': 'client_credentials'
-  };
+  }; 
+  // read detail in https://developers.arcgis.com/labs/rest/get-an-access-token/
   
   var options = {
     'method' : 'post',
@@ -36,7 +37,7 @@ function getToken() {
 }
 ```
 
-### add features to a Hosted Feature Layer on AGOL
+### Add features to a Hosted Feature Layer on AGOL
 ```
   var url = "https://services8.arcgis.com/XXXXXXXX/arcgis/rest/services/FFFFFF/FeatureServer/0/applyEdits";
   function addFeature(url){
@@ -90,7 +91,7 @@ function deleteFeatures(token, objectId_list, url){
 ```
 
 
-### Read attributes of a hosted feature layer via ESRI service url
+### Read attributes of a hosted feature layer via ESRI service url and add into a sheet
 below code is modified from https://gist.github.com/varun-raj/5350595a730a62ca1954
 ```
 function pullJSON() {
