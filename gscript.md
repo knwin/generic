@@ -1,16 +1,14 @@
 # How to's in GScript
 
-### How to add a menu
+### How to add a function to a menu
 ```
 function onOpen() {
   
   var spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
   var entries = [{
-    name : "Do This",
-    functionName : "doThisFunctionName"
+    name : "My Function",
+    functionName : "myFunctionName"
   }];
-  
-  
   spreadsheet.addMenu("My Menu", entries);
 };
 ```
