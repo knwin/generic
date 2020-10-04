@@ -1,4 +1,4 @@
-# How tos in GScript
+# How to's in GScript
 
 ### How to add a menu
 ```
@@ -114,6 +114,7 @@ function getToken() {
 ```
 
 ### Delete featues
+```
 function deleteFeatures(token, objectId_list){
 
   var myHeaders = { 'Content-Type': 'application/x-www-form-urlencoded'};    
@@ -127,3 +128,4 @@ function deleteFeatures(token, objectId_list){
   
   UrlFetchApp.fetch(url, requestOptions);
 }
+```
