@@ -46,3 +46,42 @@ If InStr(1, range_text , ":") Then
 End If
 
 ```
+
+### How to save copy as
+```
+ActiveWorkbook.SaveCopyAs(file_name)
+
+```
+
+### How to save chart
+```
+Dim myChart As Chart
+Set myChart = ActiveWorkbook.Charts(index)
+file_name = "my_chart.png"
+myChart.Export Filename:=ThisWorkbook.Path & "\" & file_name, Filtername:="PNG"
+```
+
+### Loop slicers
+```
+s_count = ActiveWorkbook.SlicerCaches("Slicer_village").SlicerItems.Count
+
+`deselect all slicer except 1st one
+ActiveWorkbook.SlicerCaches("Slicer_village").SlicerItems(1).Selected = True
+For i = 2 To s_count
+    ActiveWorkbook.SlicerCaches("Slicer_village").SlicerItems(i).Selected = False
+Next
+file_name = ActiveWorkbook.SlicerCaches("Slicer_village").SlicerItems(1).Value & ".xlsx"
+ActiveWorkbook.SaveCopyAs (file_name)
+
+`change slicers and save copy as new files
+For i = 2 To s_count
+
+   ActiveWorkbook.SlicerCaches("Slicer_village").SlicerItems(i).Selected = True
+   ActiveWorkbook.SlicerCaches("Slicer_village").SlicerItems(i-1).Selected = False
+   file_name = ActiveWorkbook.SlicerCaches("Slicer_village").SlicerItems(i).Value & ".xlsx"
+   ActiveWorkbook.SaveCopyAs (file_name)
+
+Next i
+
+```
+If all the slicer are Seleted as False, it will sell all slicer and therefore one slicer is made selected in each loop
