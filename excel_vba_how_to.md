@@ -9,7 +9,7 @@ For i = 1 To my_range.Cells.Count
         tmp = tmp & item_i & "|"
     End If   
 Next i
-tmp = left(tmp,len(tmp)-1
+tmp = left(tmp,len(tmp)-1)
 unique_items = Split(tmp, "|")
 ```
 
