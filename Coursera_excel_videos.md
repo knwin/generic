@@ -1,4 +1,4 @@
-[# Excel/VBA for Creative Problem Solving Specialization](https://www.coursera.org/specializations/excel-vba-creative-problem-solving)
+# [Excel/VBA for Creative Problem Solving Specialization](https://www.coursera.org/specializations/excel-vba-creative-problem-solving)
 by *Charlie Nuttelman*
 
 ## 1. Part-1
