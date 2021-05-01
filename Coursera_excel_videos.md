@@ -1,7 +1,7 @@
 # Excel/VBA for Creative Problem Solving Specialization
 [link](https://www.coursera.org/specializations/excel-vba-creative-problem-solving)
 
-1. Part-1
+## 1. Part-1
 1.1 Macro recording, VBA procedures, and debugging
 https://www.coursera.org/lecture/excel-vba-for-creative-problem-solving-part-1/saving-your-files-as-macro-enabled-workbooks-xePEc
 
@@ -15,7 +15,7 @@ https://www.coursera.org/lecture/excel-vba-for-creative-problem-solving-part-1/c
 https://www.coursera.org/lecture/excel-vba-for-creative-problem-solving-part-1/variable-iteration-loops-do-loops-ui465
 
 
-2. Part-2
+## 2. Part-2
 
 2.1 Arrays and Array Functions
 https://www.coursera.org/lecture/excel-vba-for-creative-problem-solving-part-2/introduction-to-arrays-g8hyc
@@ -29,7 +29,7 @@ https://www.coursera.org/lecture/excel-vba-for-creative-problem-solving-part-2/a
 2.4 User forms and advanced user input/output
 https://www.coursera.org/lecture/excel-vba-for-creative-problem-solving-part-2/advanced-input-boxes-BhZEb
 
-3. Part-3
+## 3. Part-3
 
 3.2 Easy Projects: Lesson Choices
 https://www.coursera.org/lecture/excel-vba-for-creative-problem-solving-part-3-projects/introduction-to-the-currency-converter-project-ntCRH
