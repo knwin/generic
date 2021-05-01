@@ -4,7 +4,7 @@ by *Charlie Nuttelman*
 ## 1. Part-1
 [1.1 Macro recording, VBA procedures, and debugging](https://www.coursera.org/lecture/excel-vba-for-creative-problem-solving-part-1/saving-your-files-as-macro-enabled-workbooks-xePEc)
 
-[1.2 User-Defined VBA Functions](https://www.coursera.org/lecture/excel-vba-for-creative-problem-solving-part-1/how-to-write-basic-vba-expressions-and-use-built-in-functions-CcfYI]
+[1.2 User-Defined VBA Functions](https://www.coursera.org/lecture/excel-vba-for-creative-problem-solving-part-1/how-to-write-basic-vba-expressions-and-use-built-in-functions-CcfYI)
 
 [1.3 Exchanging Information Between Excel and VBA](https://www.coursera.org/lecture/excel-vba-for-creative-problem-solving-part-1/common-objects-properties-and-methods-5QDbH)
 
