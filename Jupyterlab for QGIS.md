@@ -21,3 +21,7 @@ in the python directory copy python-qgis.bat as python-qgis-jupyterlab.bat and o
     type pip install jupyterlab
 
 Double click python-qgis-jupyterlab.bat
+
+Open new notebook and add
+from qgis.core import *
+run, if no error, you are fine
