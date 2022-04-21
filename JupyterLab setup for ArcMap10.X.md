@@ -33,7 +33,8 @@ open command prompt (cmd.exe) as adminstrator
 + edit jupyterlab_activate.bat with notepad or notepad++
   + add _set "PYTHONPATH=C:\Python27\ArcGIS10.8\Lib\site-packages"_ at second line
   + add _jupyter-lab.exe_ at the end of file
-
+(images\jupyterlab.bat.PNG)
+[images\jupyterlab.bat.PNG]
 ## 4. Create a widnows short cut for Jupyter lab
 + create a shortcut by right click over jupyterlab_activate.bat file and select shortcut to desktop
 + open properties of the _short cut_
