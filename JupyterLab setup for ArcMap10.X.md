@@ -39,7 +39,7 @@ open command prompt (cmd.exe) as adminstrator
 + create a shortcut by right click over jupyterlab_activate.bat file and select shortcut to desktop
 + open properties of the _short cut_
   + add path for home folder for jupyter notebooks in _"Start in"_ e.g _C:\jupyter_notebooks\ArcGIS_
-  
+<img src="images\jupyterlab-shortcut.PNG"></img>  
   Now you double click the short cut and juputer lab will open
 
 type __import arcpy__ in new cell of new notebook
