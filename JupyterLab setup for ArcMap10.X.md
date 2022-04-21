@@ -6,6 +6,7 @@
  + python -m pip install virtualenv
  + python -m virtualenv venv\jupyter
  + cd venv\jupyter\scripts
+ + python -m pip install pywinpty==0.5.1
  + python -m pip install jupyter
  + python -m pip install jupyterlab
  + install any module you want to install here
