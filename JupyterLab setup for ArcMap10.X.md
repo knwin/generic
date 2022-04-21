@@ -20,9 +20,10 @@ open cmd.exe as adminstrator
 + cd c:\Python27\ArcGIS10.8
 + mkdir arcpy_includes
 + cd arcpy_includes
-+ copy c:\Python27\ArcGIS10.8\Lib\site-packages\Desktop10.7.pth from windows explorer into_
-  - into c:\Python27\ArcGIS10.8\arcpy_includes 
-  - into c:\Python27\ArcGIS10.8\venv\jupyter\Lib\site-packages 
++ from windows explorer goto c:\Python27\ArcGIS10.8\Lib\site-packages\
+  - copy Desktop10.8.pth and
+    - paste into c:\Python27\ArcGIS10.8\arcpy_includes 
+    - panste into c:\Python27\ArcGIS10.8\venv\jupyter\Lib\site-packages 
 + mklink/D numpy c:\Python27\ArcGIS10.8\Lib\site-packages\numpy 
 
 ## Prepare for Jupyter lab
