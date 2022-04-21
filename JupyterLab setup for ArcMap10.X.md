@@ -33,8 +33,8 @@ open command prompt (cmd.exe) as adminstrator
 + copy C:\Python27\ArcGIS10.8\venv\jupyter\Scripts\activate.bat as jupyterlab_activate.bat in the same folder
 + edit jupyterlab_activate.bat with notepad or notepad++
   + add _set "PYTHONPATH=C:\Python27\ArcGIS10.8\Lib\site-packages"_ at second line
-  + add _set "VIRTUAL_ENV=C:\Python27\ArcGIS10.8\venv\jupyter"_ at third line
-
+ 
+  + ...
 
   + add _jupyter-lab.exe_ at the end of file
   + 
