@@ -24,7 +24,7 @@ open command prompt (cmd.exe) as adminstrator
   - copy Desktop10.8.pth and
     - paste into c:\Python27\ArcGIS10.8\arcpy_includes 
     - panste into c:\Python27\ArcGIS10.8\venv\jupyter\Lib\site-packages 
-+ in command propt, form acrpy_includes type following command and run
++ in command propt, from acrpy_includes directory, type following commands and run
   - mklink/D numpy c:\Python27\ArcGIS10.8\Lib\site-packages\numpy 
 
 ## 3. Prepare for Jupyter lab
