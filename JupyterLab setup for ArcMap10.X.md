@@ -39,6 +39,16 @@ open command prompt (cmd.exe) as adminstrator
   + add _jupyter-lab.exe_ at the end of file
   + 
 <img src="images\jupyterlab.bat.PNG"></img>
+### 3.1 ArcPy import error 
+<img src="imgages/error2.png"></img>
+in that case put REM before set "PYTHONPATH=C:\Python27\ArcGIS10.8\Lib\site-packages"_
+and as recommended by ....https:\\notesfromthelifeboat.com\post\arcpy-virtualenv\
+create a file called sitecustomize.py, in C:/Python27/ArcGIS10.5/Lib (note that the documentation recommends placing sitecustomize.py in the global Lib/site-packages directory, but virtualenv won’t be able to find it there). The contents of the file are short:
+<raw>
+import site
+
+site.addsitedir('c:/Python27/ArcGIS10.5/arcpy_includes')
+</raw> 
 ## 4. Create a widnows short cut for Jupyter lab
 + create a shortcut by right click over jupyterlab_activate.bat file and select shortcut to desktop
 + open properties of the _short cut_
