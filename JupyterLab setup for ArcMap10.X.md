@@ -74,7 +74,7 @@ The contents of the file are short:
 <code>
 import site
 
-site.addsitedir('c:/Python27/ArcGIS10.5/arcpy_includes')
+site.addsitedir('c:/Python27/ArcGIS10.8/arcpy_includes')
 </code> 
 
 ## 7. installation of Geopandas.
