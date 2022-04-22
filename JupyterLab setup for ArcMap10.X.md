@@ -60,13 +60,15 @@ I finally fix this way.. ad extra variable in platform_collector.py (C:\Python27
 
 <img src="images/solution1.png"></img>
 ### 6. ArcPy import error in jupyter
+You may get this error..
 <img src="images/error2.png"></img>
 
-in that case put REM before set "PYTHONPATH=C:\Python27\ArcGIS10.8\Lib\site-packages"_
+in that case put REM before set "PYTHONPATH=C:\Python27\ArcGIS10.8\Lib\site-packages" in jupyterlab_activate.bat file
 
-and as recommended by ....https:\\notesfromthelifeboat.com\post\arcpy-virtualenv\
+and as recommended by **https:\\notesfromthelifeboat.com\post\arcpy-virtualenv\**
 
-Create a file called sitecustomize.py, in C:/Python27/ArcGIS10.5/Lib (note that the documentation recommends placing sitecustomize.py in the global Lib/site-packages directory, but virtualenv won’t be able to find it there). 
+Create a file called **sitecustomize.py**, in C:/Python27/ArcGIS10.8/Lib (note that the documentation recommends placing sitecustomize.py in the global Lib/site-packages directory, but virtualenv won’t be able to find it there). 
+
 The contents of the file are short:
 
 <code>
