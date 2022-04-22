@@ -53,7 +53,7 @@ if no error, you are ready for ArcGIS on Jupyter environment
 ## 5. Jupyter notebook or lab is not runing 
 I got this error when I run jupyter
 
-<img src="images/erro1.png"></img>
+<img src="images/error1.png"></img>
 
 I finally fix this way.. ad extra variable in platform_collector.py (C:\Python27\ArcGIS10.8\venv\jupyter\Lib\site-packages\prometheus_client\platform_collector.py)
 
