@@ -49,3 +49,21 @@ open command prompt (cmd.exe) as adminstrator
 type __import arcpy__ in new cell of new notebook
 
 if no error, you are ready for ArcGIS on Jupyter environment
+
+## 5. Jupyter notebook or lab is not runing 
+I got this error when I run
+<img src="images/erro1.png"></img)
+I finally fix this way.. ad extra variable in platform_collector.py
+<img src="images/solution1.png"></img)
+
+## 6. installation of Geopandas.
+It is a bit headache to install Geopandas from pip. use below whl files from ArcGIS10.8_whl folder or [download from Gohlek's repository](https://www.lfd.uci.edu/~gohlke/pythonlibs/) 
+install in below order
+pip install 
+ - Shapely-1.6.4.post1-cp27-cp27m-win32.whl
+ - pyproj-1.9.6-cp27-cp27m-win32.whl
+ - gdal-2.2.4-cp27-cp27m-win32.whl
+ - Fiona-1.8.13-cp27-cp27m-win32.whl
+ - geopandas-0.4.0-py2.py3-none-any.whl
+
+A list of moudles installed on my computer for ArcGIS10.8 env is also avalible in this repository
