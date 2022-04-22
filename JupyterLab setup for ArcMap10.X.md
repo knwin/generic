@@ -39,16 +39,7 @@ open command prompt (cmd.exe) as adminstrator
   + add _jupyter-lab.exe_ at the end of file
   + 
 <img src="images\jupyterlab.bat.PNG"></img>
-### 3.1 ArcPy import error 
-<img src="imgages/error2.png"></img>
-in that case put REM before set "PYTHONPATH=C:\Python27\ArcGIS10.8\Lib\site-packages"_
-and as recommended by ....https:\\notesfromthelifeboat.com\post\arcpy-virtualenv\
-create a file called sitecustomize.py, in C:/Python27/ArcGIS10.5/Lib (note that the documentation recommends placing sitecustomize.py in the global Lib/site-packages directory, but virtualenv won’t be able to find it there). The contents of the file are short:
-<raw>
-import site
 
-site.addsitedir('c:/Python27/ArcGIS10.5/arcpy_includes')
-</raw> 
 ## 4. Create a widnows short cut for Jupyter lab
 + create a shortcut by right click over jupyterlab_activate.bat file and select shortcut to desktop
 + open properties of the _short cut_
@@ -68,7 +59,16 @@ I got this error when I run jupyter
 I finally fix this way.. ad extra variable in platform_collector.py (C:\Python27\ArcGIS10.8\venv\jupyter\Lib\site-packages\prometheus_client\platform_collector.py)
 
 <img src="images/solution1.png"></img)
+### 6 ArcPy import error in jupyter
+<img src="imgages/error2.png"></img>
+in that case put REM before set "PYTHONPATH=C:\Python27\ArcGIS10.8\Lib\site-packages"_
+and as recommended by ....https:\\notesfromthelifeboat.com\post\arcpy-virtualenv\
+create a file called sitecustomize.py, in C:/Python27/ArcGIS10.5/Lib (note that the documentation recommends placing sitecustomize.py in the global Lib/site-packages directory, but virtualenv won’t be able to find it there). The contents of the file are short:
+<raw>
+import site
 
+site.addsitedir('c:/Python27/ArcGIS10.5/arcpy_includes')
+</raw> 
 ## 6. installation of Geopandas.
 It is a bit headache to install Geopandas from pip. use below whl files from ArcGIS10.8_whl folder or [download from Gohlek's repository](https://www.lfd.uci.edu/~gohlke/pythonlibs/) 
 install in below order
