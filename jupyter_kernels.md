@@ -14,25 +14,24 @@ Open file explorer
  - copy kernel.json and png logos from existing kernel folder
  - edit kernel.json
    - edit the path to python in new environment
-```
-{
- "argv": [
-  "C:\\miniconda3\\envs\\youtube\\python.exe",
-  "-m",
-  "ipykernel_launcher",
-  "-f",
-  "{connection_file}"
- ],
- "display_name": "youtbue",
- "language": "python",
- "metadata": {
-  "debugger": true
- }
-}
-```
-
    - edit the display name
+     ```
+     {
+      "argv": [
+       "C:\\miniconda3\\envs\\youtube\\python.exe",
+       "-m",
+       "ipykernel_launcher",
+       "-f",
+       "{connection_file}"
+      ],
+      "display_name": "youtbue",
+      "language": "python",
+      "metadata": {
+       "debugger": true
+      }
+     }
+     ```
    - edit the logo if you want differnt style for your environment  
    
-   <img src="images\kernel_folder.png"></img>
+     <img src="images\kernel_folder.png"></img>
 
