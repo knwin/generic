@@ -12,12 +12,8 @@ Open file explorer
  <img src="images\kernel_folders.png"></img>
  - add a new folder (example. youtube envrioment which I just installed)
  - copy kernel.json and png logos from existing kernel folder
- <img src="images\kernel_folder.png"></img>
  - edit kernel.json
    - edit the path to python in new environment
-   - edit the display name
-   - edit the logo if you want differnt style for your environment  
-   - 
 ```
 {
  "argv": [
@@ -34,3 +30,9 @@ Open file explorer
  }
 }
 ```
+
+   - edit the display name
+   - edit the logo if you want differnt style for your environment  
+   
+   <img src="images\kernel_folder.png"></img>
+
