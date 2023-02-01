@@ -93,5 +93,9 @@ in side the folder edit kernel.json as follow
  "display_name": "QGIS(Py3.9)",
  "language": "python"
 }
-``
+```
 save it
+
+when you create a new notebook you see a list of available kernels like below
+
+ <img src="images\kernel_selection3.png"></img>
