@@ -35,3 +35,63 @@ Open file explorer
    
      <img src="images\kernel_folder.png"></img>
 
+
+## Making QGIS available in jypyter kernels
+this example is for QGIS installed with OSGEO4W setup and you have jupyter lab installed (with other python)
+
+Go to C:\OSGeo4W
+copy OSGeo4W.bat as OSGeo4W_python_qgis.bat and open it in edit mode
+
+go to C:\OSGeo4W\bin and open python-qgis.bat in edit mode and copy the content
+
+paste at last row of OSGeo4W_python_qgis.bat (edit mode) and save
+
+the bat file content will be looked like this
+```
+@echo off
+rem this bat file is to use in argv parameter of Jupyter kernel.json file.
+
+rem Root OSGEO4W home dir to the same directory this script exists in
+call "%~dp0\bin\o4w_env.bat"
+
+rem List available o4w programs
+rem but only if osgeo4w called without parameters
+cd bin
+
+@echo off
+call "%~dp0\o4w_env.bat"
+@echo off
+path %OSGEO4W_ROOT%\apps\qgis\bin;%PATH%
+set QGIS_PREFIX_PATH=%OSGEO4W_ROOT:\=/%/apps/qgis
+set GDAL_FILENAME_IS_UTF8=YES
+rem Set VSI cache to be used as buffer, see #6448
+set VSI_CACHE=TRUE
+set VSI_CACHE_SIZE=1000000
+set QT_PLUGIN_PATH=%OSGEO4W_ROOT%\apps\qgis\qtplugins;%OSGEO4W_ROOT%\apps\qt5\plugins
+set PYTHONPATH=%OSGEO4W_ROOT%\apps\qgis\python;%PYTHONPATH%
+python %*
+```
+
+from command line
+ - C:\OSGeo4W\apps\Python39\python -m pip install ipykernel
+ - OR install ipykernel from OSGEO4W setup UI
+
+Go to C:\Users\Kyaw\AppData\Roaming\jupyter\kernels
+
+copy an existing kernel folder and paste and rename as QGIS
+
+in side the folder edit kernel.json as follow
+```
+{
+ "argv": [
+  "C:\\OSGeo4W\\OSGeo4W_python_qgis.bat",
+  "-m",
+  "ipykernel_launcher",
+  "-f",
+  "{connection_file}"
+ ],
+ "display_name": "QGIS(Py3.9)",
+ "language": "python"
+}
+``
+save it
