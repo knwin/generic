@@ -36,8 +36,8 @@ Open file explorer
      <img src="images\kernel_folder.png"></img>
 
 
-## Making QGIS available in jypyter kernels
-this example is for QGIS installed with OSGEO4W setup and you have jupyter lab installed (with other python)
+## Making QGIS available in Juypyter kernels list
+this example is for QGIS installed with OSGEO4W setup and you have jupyter-lab installed (maybe with other python environmet)
 
 Go to C:\OSGeo4W
 copy OSGeo4W.bat as OSGeo4W_python_qgis.bat and open it in edit mode
