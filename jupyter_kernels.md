@@ -102,4 +102,8 @@ when you create a new notebook you see a list of available kernels like below
 ### test if it works
 open new note book with QGIS python as kernel
 
-type ```from qgis.core import *`` in a cell and run. if no error, you succeeded
+type 
+```
+from qgis.core import *
+``` 
+in a cell and run. if no error, you have succeeded!!
