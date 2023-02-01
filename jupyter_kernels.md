@@ -40,11 +40,11 @@ Open file explorer
 this example is for QGIS installed with OSGEO4W setup and you have jupyter-lab installed (maybe with other python environmet)
 
 Go to C:\OSGeo4W
-copy OSGeo4W.bat as OSGeo4W_python_qgis.bat and open it in edit mode
+ - copy OSGeo4W.bat as OSGeo4W_python_qgis.bat and open it in edit mode
 
 go to C:\OSGeo4W\bin and open python-qgis.bat in edit mode and copy the content
 
-paste at last row of OSGeo4W_python_qgis.bat (edit mode) and save
+ - paste at last row of OSGeo4W_python_qgis.bat (edit mode) and save
 
 the bat file content will be looked like this
 ```
@@ -77,8 +77,7 @@ from command line
  - OR install ipykernel from OSGEO4W setup UI
 
 Go to C:\Users\Kyaw\AppData\Roaming\jupyter\kernels
-
-copy an existing kernel folder and paste and rename as QGIS
+ - copy an existing kernel folder and paste and rename as QGIS
 
 in side the folder edit kernel.json as follow
 ```
@@ -94,7 +93,7 @@ in side the folder edit kernel.json as follow
  "language": "python"
 }
 ```
-save it
+ - save it
 
 when you create a new notebook you see a list of available kernels like below
 
