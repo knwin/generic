@@ -1,5 +1,5 @@
 # Adding Kernels to Jupyter notebook and Jupyterlab
-On a Jupyter notebook, there is an optoin to chose which kernel to run for the notebook. It also appeare similar option when creating a new notbook.
+On a Jupyter notebook, there is an optoin to chose which kernel to run for the notebook. It also appeares similar option but with icons when creating a new notebook.
 
 <img src="images\kernel_selection1.png"></img>
 
