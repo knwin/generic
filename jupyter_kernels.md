@@ -98,3 +98,8 @@ in side the folder edit kernel.json as follow
 when you create a new notebook you see a list of available kernels like below
 
  <img src="images\kernel_selection3.png"></img>
+
+### test if it works
+open new note book with QGIS python as kernel
+
+type ```from qgis.core import *`` in a cell and run. if no error, you succeeded
