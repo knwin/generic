@@ -1,6 +1,10 @@
 # Adding Kernels to Jupyter notebook and Jupyterlab
 On a Jupyter notebook, there is an optoin to chose which kernel to run for the notebook. It also appeares similar option but with icons when creating a new notebook.
 
+Sometime you may not see kernels under the said folder in this case run following
+
+`ipython kernel install --user --name=projectname`
+
 <img src="images\kernel_selection1.png"></img>
 
 <img src="images\kernel_selection2.png"></img>
