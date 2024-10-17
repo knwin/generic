@@ -2,6 +2,7 @@
 On a Jupyter notebook, there is an optoin to chose which kernel to run for the notebook. It also appeares similar option but with icons when creating a new notebook.
 
 Sometime you may not see kernels under the said folder in this case run following
+
 `conda install ipykernel`
 OR
 `ipython kernel install --user --name=projectname`
