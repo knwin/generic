@@ -13,7 +13,7 @@ There are 20 color variations. You still can choose different color if needed. I
   - Click Import/Export
    - choose "Import Item(s)"
 
-     <img src="images\Qgis_importStyles.png"></img>
+     <img src="images\QGIS_importStyles.png"></img>
      
    -  Import from: File
    -  select the downloaded *Firefly.xml*
