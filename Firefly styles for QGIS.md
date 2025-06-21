@@ -8,7 +8,7 @@ There are 20 color variations. You still can choose different color if needed. I
 
 
 ## Style importing into QGIS
- - download the styel file [here](https://github.com/)
+ - download the styel file [Firefly.xml](https://knwin.github.io/generic/Firefly.xml) here
  - in QGIS, from setting open Styel Manager
   - Click Import/Export
    - choose "Import Item(s)"
