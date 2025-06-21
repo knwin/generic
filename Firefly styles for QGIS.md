@@ -20,3 +20,6 @@ There are 20 color variations. You still can choose different color if needed. I
    -  select the downloaded *Firefly.xml*
    -  click select all
    -  click import
+
+### Sample
+ <img src="images\Firefly_symbology_sample.png"></img>
