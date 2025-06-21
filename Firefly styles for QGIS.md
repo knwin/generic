@@ -8,9 +8,9 @@ There are 20 color variations. You still can choose different color if needed. I
 
 
 ## Style importing into QGIS
- - download the style file [Firefly.xml](https://knwin.github.io/generic/Firefly.xml) here
- - download the style file <a href="https://knwin.github.io/generic/Firefly.xml" download>Firefly.xml here</a>
- - in QGIS, from setting open Styel Manager
+ - download the zipped style file [Firefly.xml](https://knwin.github.io/generic/Firefly_style_for_qgis.zip) here
+ - unzip the dowloaded file
+ - in QGIS, from the **Settings** menu, open the *Styel Manager*
   - Click Import/Export
    - choose "Import Item(s)"
 
