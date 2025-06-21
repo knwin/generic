@@ -1,1 +1,1 @@
-<img src="images\firefly style.png"></img>
+<img src="images\FireflySymbols.png"></img>
